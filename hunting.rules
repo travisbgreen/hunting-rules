@@ -117,8 +117,6 @@ alert udp $HOME_NET any -> any 53 (msg:"TGI HUNT Large DNS Query not TCP"; conte
 alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in HTTP URI"; flow:to_server,established; content:"%2525"; http_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600121; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Path"; flow:to_server,established; content:"/Panel/"; http_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600122; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Path"; flow:to_server,established; content:"/Panel/"; http_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600122; rev:1;)
-
 alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Response (localhost)"; flow:to_client,established; content:"Server|3a 20|localhost|0d 0a|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600123; rev:1;)
 
 alert ip any any -> any any (msg:"TGI HUNT non-DiffServ aware TOS setting"; flow:established,to_server; tos:!0; tos:!8; tos:!16; tos:!24; tos:!32; tos:!40; tos:!48; tos:!56; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600124; rev:1;)
@@ -132,3 +130,4 @@ alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x8
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x64 1"; flow:to_client,established; file_data; content:"|33 ff|"; content:"|89 37|"; within:3; content:"|8b f3 45 85|"; within:5; content:"|74|"; within:2; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2600128; rev:1;)
 
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x64 2"; flow:to_client,established; file_data; content:"|4c 8b df 49|"; content:"|c1 e3 04 48|"; within:8; content:"|8b cb 4c 03|"; within:8; content:"|d8|"; within:2; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2600129; rev:1;)
+
