@@ -1,8 +1,7 @@
 # hunting-rules
-Suricata 4.1+ rules for network anomaly detection
+Rules for network anomaly detection, requires Suricata 4.1.2 or above. Choice has 
 
-FP / suggestions to @travisbgreen or travis|40|travisgreen.net  
-PR welcomed
+FP / suggestions / PR welcomed 
 
-**Not** a performant ruleset, not recommended for high speed production use.
-
+twitter: @travisbgreen
+web: travisgreen.net
