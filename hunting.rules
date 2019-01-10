@@ -131,3 +131,43 @@ alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x6
 
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x64 2"; flow:to_client,established; file_data; content:"|4c 8b df 49|"; content:"|c1 e3 04 48|"; within:8; content:"|8b cb 4c 03|"; within:8; content:"|d8|"; within:2; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2600129; rev:1;)
 
+alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST"; flow:to_server,established; content:"LaZagne Project"; http_client_body; classtype:bad-unknown; sid:2600130; rev:1;)
+
+alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST 2"; flow:to_server,established; content:"|20|passwords -----------------"; http_client_body; classtype:bad-unknown; sid:2600131; rev:1;)
+
+alert tls any any -> any any (msg:"TGI HUNT DNS over TLS JA3 SSL-Client Fingerprint detected (Stubby)"; ja3_hash; content:"c369db2c355ad05c76f5660af3179b01"; reference:url, www.linuxbabe.com/ubuntu/ubuntu-stubby-dns-over-tls; sid:906200062; rev:1;)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
