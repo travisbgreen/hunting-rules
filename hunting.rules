@@ -137,7 +137,7 @@ alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST 2"; f
 
 alert tls any any -> any any (msg:"TGI HUNT DNS over TLS JA3 SSL-Client Fingerprint Detected (Stubby)"; ja3_hash; content:"c369db2c355ad05c76f5660af3179b01"; reference:url,www.linuxbabe.com/ubuntu/ubuntu-stubby-dns-over-tls; sid:2600132; rev:1;)
 
-alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
+#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
 # JA3S = 80b3a14bccc8598a1f3bbe83e71f735f ( C2 Server Response )
 
 alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"6734f37431670b3ab4292b8f60f29984"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600134; rev:1;)
@@ -146,32 +146,9 @@ alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected 
 alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"e7d705a3286e19ea42f587b344ee6865"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600135; rev:1;)
 # JA3S = a95ca7eab4d47d051a5cd4fb7b6005dc( Tor Server Response )
 
+alert http any any -> any any (msg:"TGI HUNT mimikatz Artifacts in HTTP POST"; flow:to_server,established; content:"S-1-5-21-"; nocase; http_client_body; content:"Username"; nocase; http_client_body; content:"Domain"; nocase; http_client_body; content:"NTLM"; nocase; http_client_body; content:"SHA1"; nocase; http_client_body; classtype:bad-unknown; sid:2600136; rev:1;)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely Malicious PS Inbound"; flow:from_server,established; content:"Write-BytesToMemory"; content:"Invoke-CreateRemoteThread"; content:"VirtualAllocEx"; content:"WriteProcessMemory"; classtype:bad-unknown; sid:2600137; rev:1;)
 
 
 
