@@ -137,7 +137,7 @@ alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST 2"; f
 
 alert tls any any -> any any (msg:"TGI HUNT DNS over TLS JA3 SSL-Client Fingerprint Detected (Stubby)"; ja3_hash; content:"c369db2c355ad05c76f5660af3179b01"; reference:url,www.linuxbabe.com/ubuntu/ubuntu-stubby-dns-over-tls; sid:2600132; rev:1;)
 
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
 # JA3S = 80b3a14bccc8598a1f3bbe83e71f735f ( C2 Server Response )
 
 alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"6734f37431670b3ab4292b8f60f29984"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600134; rev:1;)
@@ -150,6 +150,8 @@ alert http any any -> any any (msg:"TGI HUNT mimikatz Artifacts in HTTP POST"; f
 
 alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely Malicious PS Inbound"; flow:from_server,established; content:"Write-BytesToMemory"; content:"Invoke-CreateRemoteThread"; content:"VirtualAllocEx"; content:"WriteProcessMemory"; classtype:bad-unknown; sid:2600137; rev:1;)
 
+alert http any any -> any any (msg:"TGI HUNT Non Browser HTTP to Pastebin"; flow:to_server,established; content:"pastebin.com"; http_host; content:!"Mozilla"; nocase; http_user_agent; classtype:bad-unknown; sid:2600138; rev:1;)
 
+alert tls any any -> any any (msg:"GI HUNT JA3 SSL-Client Fingerprint Detected (IcedID)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
 
 
