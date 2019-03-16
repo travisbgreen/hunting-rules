@@ -152,6 +152,6 @@ alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely
 
 alert http any any -> any any (msg:"TGI HUNT Non Browser HTTP to Pastebin"; flow:to_server,established; content:"pastebin.com"; http_host; content:!"Mozilla"; nocase; http_user_agent; classtype:bad-unknown; sid:2600138; rev:1;)
 
-alert tls any any -> any any (msg:"GI HUNT JA3 SSL-Client Fingerprint Detected (IcedID)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
 
 
