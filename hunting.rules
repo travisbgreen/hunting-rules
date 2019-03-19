@@ -22,7 +22,7 @@ alert http any any -> any any (msg:"TGI HUNT unknown etherium server probe"; flo
 alert http any any -> any any (msg:"TGI HUNT Graves Accent (backtick) in HTTP Request"; flow:established,to_server; content:"`"; nocase;  threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600021; rev:2;)
 alert http any any -> any any (msg:"TGI HUNT Content-Type jpeg serving PE likely hostile"; flow:established,from_server; content:"200"; http_stat_code; content:"Content-Type|3a 20|image/jpeg"; http_header; file_data; content:"MZ"; depth:2; byte_jump:4,58,relative,little; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600022; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT directory traversal in Zip"; flow:established; content:"PK"; content:"|2e 2e 5c|"; distance:28; within:3; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600023; rev:1;)
-alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP"; flow:established; content:"|2e 2e 5c|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600024; rev:1;)
+alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Response"; flow:established,to_client; content:"|2e 2e 5c|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600024; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP POST"; flow:established; content:"shell_exec("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600025; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP"; flow:established; content:"eval("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600026; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT two %25 in HTTP URI"; flow:to_server,established; content:"%25"; http_raw_uri; content:"%25"; http_raw_uri; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600029; rev:1;)
@@ -152,6 +152,10 @@ alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely
 
 alert http any any -> any any (msg:"TGI HUNT Non Browser HTTP to Pastebin"; flow:to_server,established; content:"pastebin.com"; http_host; content:!"Mozilla"; nocase; http_user_agent; classtype:bad-unknown; sid:2600138; rev:1;)
 
-alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID/Orcus/.net WebClient().DownloadString())"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
 
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (GoldenAxe Ransomware)"; ja3_hash; content:"5001b4c2a48c94b76ca1f0199345fe60"; reference:md5,87c1b3e2b788dd54d196fb67ba0da6dc; sid:2600140; rev:1;)
 
+alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; http.header; content:"|2e 2e 5c|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600141; rev:1;)
+
+alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; http.header; content:"|2e 2e 2f|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600142; rev:1;)
