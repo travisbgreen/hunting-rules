@@ -137,10 +137,10 @@ alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST 2"; f
 
 alert tls any any -> any any (msg:"TGI HUNT DNS over TLS JA3 SSL-Client Fingerprint Detected (Stubby)"; ja3_hash; content:"c369db2c355ad05c76f5660af3179b01"; reference:url,www.linuxbabe.com/ubuntu/ubuntu-stubby-dns-over-tls; sid:2600132; rev:1;)
 
-alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt/Ursnif)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600133; rev:1;)
 # JA3S = 80b3a14bccc8598a1f3bbe83e71f735f ( C2 Server Response )
 
-alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"6734f37431670b3ab4292b8f60f29984"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600134; rev:1;)
+#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"6734f37431670b3ab4292b8f60f29984"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600134; rev:1;)
 # JA3S = 623de93db17d313345d7ea481e7443cf( C2 Server Response )
 
 alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"e7d705a3286e19ea42f587b344ee6865"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2600135; rev:1;)
@@ -152,10 +152,24 @@ alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely
 
 alert http any any -> any any (msg:"TGI HUNT Non Browser HTTP to Pastebin"; flow:to_server,established; content:"pastebin.com"; http_host; content:!"Mozilla"; nocase; http_user_agent; classtype:bad-unknown; sid:2600138; rev:1;)
 
-alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID/Orcus/.net WebClient().DownloadString())"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID/Orcus/.net WebClient().DownloadString()/js.griffon/WinHttpConnect)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2600139; rev:1;)
 
 alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (GoldenAxe Ransomware)"; ja3_hash; content:"5001b4c2a48c94b76ca1f0199345fe60"; reference:md5,87c1b3e2b788dd54d196fb67ba0da6dc; sid:2600140; rev:1;)
 
 alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; http.header; content:"|2e 2e 5c|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600141; rev:1;)
 
 alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; http.header; content:"|2e 2e 2f|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600142; rev:1;)
+
+alert ftp-data $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Password Artifact Outbound in FTP"; flow:established,to_server; content:"Password"; fast_pattern; pcre:"/\bPassword\b/"; reference:url,github.com/AlessandroZ/LaZagne; classtype:trojan-activity; sid:2600143; rev:1;)
+
+alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Cookie STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"cookies"; nocase; distance:0; fast_pattern; pcre:"/\bcookies\b/i"; classtype:trojan-activity; sid:2600144; rev:1;)
+
+alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT log STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"log"; nocase; distance:0; fast_pattern; pcre:"/\blog\b/i"; classtype:trojan-activity; sid:2600145; rev:1;)
+
+alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".stage.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2600146; rev:1;)
+
+alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".resources.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2600147; rev:1;)
+
+alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".feeds.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2600148; rev:1;)
+
+
