@@ -145,6 +145,7 @@ alert ftp any any -> any any (msg:"TGI HUNT abnormally long STOR in FTP"; flow:e
 alert ftp any any -> any any (msg:"TGI HUNT abnormally long SIZE in FTP"; flow:established,to_server; content:"SIZE"; depth:4; isdataat:256,relative; classtype:bad-unknown; sid:2600151; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT Frequently Abused Java Invocation in HTTP POST Body"; flow:established,to_server; content:"java.lang.ProcessBuilder"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,blog.talosintelligence.com/2019/04/sodinokibi-ransomware-exploits-weblogic.html; sid:2600152; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT Suspicious Filename Powershell Download"; flow:established,to_server; content:"GET"; http_method; content:".ps1"; http_uri; endswith; fast_pattern; pcre:"/(?:keylogger|rat|stealer|remote)[^/]*\.ps1$/Ui"; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600153; rev:1;)
+alert http any any -> any any (msg:"TGI HUNT .hta File is Referer"; flow:established,to_server; http_referer; content:".hta"; endswith; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600154; rev:1;)
 
 # TODO update risky tlds; expand to dns, http host
 
