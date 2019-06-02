@@ -147,6 +147,36 @@ alert http any any -> any any (msg:"TGI HUNT Frequently Abused Java Invocation i
 alert http any any -> any any (msg:"TGI HUNT Suspicious Filename Powershell Download"; flow:established,to_server; content:"GET"; http_method; content:".ps1"; http_uri; endswith; fast_pattern; pcre:"/(?:keylogger|rat|stealer|remote)[^/]*\.ps1$/Ui"; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600153; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT .hta File in Referer"; flow:established,to_server; http_referer; content:".hta"; endswith; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600154; rev:1;)
 
-# TODO update risky tlds; expand to dns, http host
+alert dns any any -> any any (msg:"TGI HUNT Abused TLD .ug in DNS"; flow:established; dns_query; content:".ug"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600155; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT Abused TLD .ug in SNI"; flow:established,to_server; tls_sni; content:".ug"; endswith; classtype:bad-unknown; sid:2600156;)
+alert http any any -> any any (msg:"TGI HUNT Abused TLD .ug in HTTP Host"; flow:established,to_server; content:".ug"; http_host; endswith; classtype:bad-unknown; sid:2600157;)
+alert dns any any -> any any (msg:"TGI HUNT Abused TLD .pw in DNS"; flow:established; dns_query; content:".pw"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600158; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT Abused TLD .pw in SNI"; flow:established,to_server; tls_sni; content:".pw"; endswith; classtype:bad-unknown; sid:2600159;)
+alert http any any -> any any (msg:"TGI HUNT Abused TLD .pw in HTTP Host"; flow:established,to_server; content:".pw"; http_host; endswith; classtype:bad-unknown; sid:2600160;)
+alert dns any any -> any any (msg:"TGI HUNT Abused TLD .info in DNS"; flow:established; dns_query; content:".info"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2600161; rev:1;)
+alert tls any any -> any any (msg:"TGI HUNT Abused TLD .info in SNI"; flow:established,to_server; tls_sni; content:".info"; endswith; classtype:bad-unknown; sid:2600162;)
+alert http any any -> any any (msg:"TGI HUNT Abused TLD .info in HTTP Host"; flow:established,to_server; content:".info"; http_host; endswith; classtype:bad-unknown; sid:2600163;)
+
+# idea, HTTP response 200 with content length 0
+# cookie header and no referer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
