@@ -201,10 +201,12 @@ alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Bas
 alert tcp any any -> $HOME_NET 3389 (msg:"TGI HUNT Likely MSF BlueKeep Auxilliary Scan Inbound"; flow:established; content:"|03 00 00|"; depth:3; content:"Cookie="; distance:0; content:"|0d 0a|"; distance:5; within:2; content:"|00 00 00 00|"; distance:5; endswith; reference:url,https://medium.com/@bromiley/what-happens-before-hello-ce9f29fa0cef; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610200; rev:1;)
 alert tcp any any -> $HOME_NET 3389 (msg:"TGI HUNT Likely RDPScan Scan Inbound"; flow:established; content:"|03 00 00|"; depth:3; content:"Cookie="; distance:0; content:"|0d 0a|"; distance:8; within:2; content:"|01 00 00 00|"; distance:5; endswith; reference:url,https://medium.com/@bromiley/what-happens-before-hello-ce9f29fa0cef; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610201; rev:1;)
 
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Cobalt Strike Malleable C2 Null Response (Flowbit Set)"; flow:established,to_server; http_header_names; content:!"Referer"; content:"Cookie"; flowbits:set,hunt.cs_null_response; flowbits:noalert; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610202; rev:1;)
 
-# idea, HTTP response 200 with content length 0
-# cookie header and no referer
-# 
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Cobalt Strike Malleable C2 Null Response"; flow:established,to_client; http.stat_code; content:"200"; bsize:3; pkt_data; content:"Content-Length:|20|0|0d 0a|"; fast_pattern; flowbits:isset,hunt.cs_null_response; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610203; rev:1;)
+
+
+
 
 
 
