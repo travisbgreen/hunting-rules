@@ -107,7 +107,7 @@ alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer Blat"; flow
 #alert dns any any -> any any (msg:"TGI HUNT WPAD Request"; dns_query; content:"wpad"; nocase; startswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610124; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT netsh firewall"; flow:established; content:"netsh firewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610125; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT netsh advfirewall"; flow:established; content:"netsh advfirewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610126; rev:1;)
-alert tcp any any -> any any (msg:"TGI HUNT MS Copyright Banner"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; content:!"ASP.NET SignalR JavaScript Library"; content:!"// MicrosoftMvcAjax.js"; content:!"MicrosoftAjaxWebForms.js"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610127; rev:1;)
+alert tcp any any -> any any (msg:"TGI HUNT MS Copyright Banner"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610127; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT WMIC Prompt"; flow:established; content:"wmic|3a|root|5c|cli>"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610128; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT sc output"; flow:established; content:"SERVICE_NAME|3a|"; content:"TYPE"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610129; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT Unknown Login Attempt"; flow:established; content:"Action|3a 20|Login"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610130; rev:1;)
@@ -237,4 +237,23 @@ alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; classtype:attempted-user; sid:2610254; rev:1;)
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name"; content:"impacket("; classtype:attempted-user; sid:2610255; rev:1;)
+
+# too common :(
+#alert http any any -> any any (msg:"TGI HUNT CS3 Default User-Agent"; flow:established; content:"Mozilla/5.0 (Windows NT 6.1|3b| WOW64|3b| Trident/7.0|3b| rv:11.0) like Gecko"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610256; rev:1;)
+
+#alert http any any -> any any (msg:"TGI HUNT CS3 Threatxpress Default User-Agent"; flow:established; content:"Mozilla/5.0 (Windows NT 6.3|3b| Trident/7.0|3b| rv:11.0) like Gecko"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610257; rev:1;)
+
+alert http any any -> any any (msg:"TGI HUNT CS4 Default User-Agent"; flow:established; content:"Mozilla/5.0 (compatible|3b| MSIE 9.0|3b| Windows NT 6.1|3b| Trident/5.0|3b| BOIE9|3b|ENAU)"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610258; rev:1;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Excel Template Injection"; flow:to_server,established; content:".dotm?raw=true"; http_uri; fast_pattern; reference:url,twitter.com/jstrosch/status/1267471477458288642; classtype:trojan-activity; sid:2610259; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; sid:2610260; rev:1;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; sid:2610261; rev:1;)
+
+
+
+
+
+
 
