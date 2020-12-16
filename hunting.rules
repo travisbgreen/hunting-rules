@@ -168,7 +168,7 @@ alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifac
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".resources.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610185; rev:1;)
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".feeds.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610186; rev:1;)
 alert udp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Anomalous DNS >512 bytes over UDP"; dsize:>512; prefilter; content:"|01 00 00 01 00 00 00 00 00 00|"; offset:2; depth:10; reference:url,tools.ietf.org/html/rfc5966; classtype:trojan-activity; sid:2610187; rev:1;)
-alert ftp any any -> any any (msg:"TGI HUNT abnormally long STOR in FTP"; flow:established,to_server; content:"STOR"; depth:4; isdataat:256,relative; classtype:bad-unknown; sid:2610188; rev:1;)
+alert tcp-pkt any any -> any any (msg:"TGI HUNT abnormally long STOR in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; isdataat:256,relative; classtype:bad-unknown; sid:2610188; rev:1;)
 alert ftp any any -> any any (msg:"TGI HUNT abnormally long SIZE in FTP"; flow:established,to_server; content:"SIZE"; depth:4; isdataat:256,relative; classtype:bad-unknown; sid:2610189; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT Frequently Abused Java Invocation in HTTP POST Body"; flow:established,to_server; content:"java.lang.ProcessBuilder"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,blog.talosintelligence.com/2019/04/sodinokibi-ransomware-exploits-weblogic.html; sid:2610190; rev:1;)
 alert http any any -> any any (msg:"TGI HUNT Suspicious Filename Powershell Download"; flow:established,to_server; content:"GET"; http_method; content:".ps1"; http_uri; endswith; fast_pattern; pcre:"/(?:keylogger|rat|stealer|remote)[^/]*\.ps1$/Ui"; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610191; rev:1;)
@@ -251,9 +251,17 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Au
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; sid:2610261; rev:1;)
 
+alert ftp any any -> !$HOME_NET any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610262; rev:1;)
 
+alert ftp any any -> !$HOME_NET any (msg:"TGI HUNT Possible FTP Exfil"; flow:established,to_server; content:"STOR"; flowbits:isset,ftp_exfil; classtype:bad-unknown; sid:2610263; rev:1;)
 
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Phishing Simulation HTTP Header Inbound"; flow:established,to_client; http.header; content:"Server|3a 20|ThreatSim-Web-Server|0d 0a|"; sid:2610264; rev:1;)
 
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (CloudFront)"; flow:established,to_server; content:"POST"; http_method; content:".cloudfront.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610265; rev:1;)
 
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (Azure)"; flow:established,to_server; content:"POST"; http_method; content:".azureedge.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610266; rev:1;)
 
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (AWS)"; flow:established,to_server; content:"POST"; http_method; content:".awsstatic.com"; http_host; fast_pattern; classtype:trojan-activity; sid:2610267; rev:1;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP Request to 127.0.0.1"; flow:established,to_server; content:"127.0.0.1"; http_host; fast_pattern; classtype:trojan-activity; sid:2610268; rev:1;)
 
