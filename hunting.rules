@@ -232,11 +232,11 @@ alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound
 
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT SMB Administrator Brute Force"; flow:to_server,established; content:"NTLMSSP|00|"; content:"A|00|d|00|m|00|i|00|n|00|i|00|s|00|t|00|r|00|a|00|t|00|o|00|r"; distance:0; threshold:type both, track by_src, seconds 60, count 5; classtype:bad-unknown; sid:2610252; rev:1;)
 
-alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; classtype:attempted-user; sid:2610253; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610253; rev:1;)
 
-alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; classtype:attempted-user; sid:2610254; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610254; rev:1;)
 
-alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name"; content:"impacket("; classtype:attempted-user; sid:2610255; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name (impacket)"; flow:established; content:"impacket("; classtype:attempted-user; sid:2610255; rev:1;)
 
 # too common :(
 #alert http any any -> any any (msg:"TGI HUNT CS3 Default User-Agent"; flow:established; content:"Mozilla/5.0 (Windows NT 6.1|3b| WOW64|3b| Trident/7.0|3b| rv:11.0) like Gecko"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610256; rev:1;)
@@ -264,4 +264,10 @@ alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Freque
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (AWS)"; flow:established,to_server; content:"POST"; http_method; content:".awsstatic.com"; http_host; fast_pattern; classtype:trojan-activity; sid:2610267; rev:1;)
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP Request to 127.0.0.1"; flow:established,to_server; content:"127.0.0.1"; http_host; fast_pattern; classtype:trojan-activity; sid:2610268; rev:1;)
+
+alert tcp any any -> $HOME_NET 23 (msg:"TGI HUNT Sudo Command in Telnet Traffic"; flow:established,to_server; content:"sudo|20|"; nocase; fast_pattern; pcre:"/\bsudo\b/i"; classtype:bad-unknown; sid:2610269; rev:1;)
+
+alert http any any -> any any (msg:"TGI HUNT Suspicious Content Type"; flow:established,to_client; http_content_type; content:"application/x-sh"; endswith; reference:url,gist.github.com/travisbgreen/a24c4ea2e11cb53b03b9b327bf07cf89; classtype:bad-unknown; sid:2610270; rev:1;)
+
+#eval( in POST Body
 
