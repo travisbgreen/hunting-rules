@@ -269,5 +269,11 @@ alert tcp any any -> $HOME_NET 23 (msg:"TGI HUNT Sudo Command in Telnet Traffic"
 
 alert http any any -> any any (msg:"TGI HUNT Suspicious Content Type"; flow:established,to_client; http_content_type; content:"application/x-sh"; endswith; reference:url,gist.github.com/travisbgreen/a24c4ea2e11cb53b03b9b327bf07cf89; classtype:bad-unknown; sid:2610270; rev:1;)
 
+alert tls any any -> any any (msg:"TGI HUNT TLS Suspicious String in TLS Subject (metasploit)"; flow:established,to_client; content:"metasploit"; nocase; classtype:bad-unknown; sid:2610271; rev:1;)
+
+
 #eval( in POST Body
+
+
+
 
