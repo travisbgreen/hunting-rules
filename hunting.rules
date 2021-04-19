@@ -107,7 +107,7 @@ alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer Blat"; flow
 #alert dns any any -> any any (msg:"TGI HUNT WPAD Request"; dns_query; content:"wpad"; nocase; startswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610124; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT netsh firewall"; flow:established; content:"netsh firewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610125; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT netsh advfirewall"; flow:established; content:"netsh advfirewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610126; rev:1;)
-alert tcp any any -> any any (msg:"TGI HUNT MS Copyright Banner"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610127; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT WMIC Prompt"; flow:established; content:"wmic|3a|root|5c|cli>"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610128; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT sc output"; flow:established; content:"SERVICE_NAME|3a|"; content:"TYPE"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610129; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT Unknown Login Attempt"; flow:established; content:"Action|3a 20|Login"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610130; rev:1;)
@@ -251,9 +251,9 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Au
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; sid:2610261; rev:1;)
 
-alert ftp any any -> !$HOME_NET any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610262; rev:1;)
+alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610262; rev:1;)
 
-alert ftp any any -> !$HOME_NET any (msg:"TGI HUNT Possible FTP Exfil"; flow:established,to_server; content:"STOR"; flowbits:isset,ftp_exfil; classtype:bad-unknown; sid:2610263; rev:1;)
+alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil"; flow:established,to_server; content:"STOR"; flowbits:isset,ftp_exfil; classtype:bad-unknown; sid:2610263; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Phishing Simulation HTTP Header Inbound"; flow:established,to_client; http.header; content:"Server|3a 20|ThreatSim-Web-Server|0d 0a|"; sid:2610264; rev:1;)
 
@@ -271,9 +271,15 @@ alert http any any -> any any (msg:"TGI HUNT Suspicious Content Type"; flow:esta
 
 alert tls any any -> any any (msg:"TGI HUNT TLS Suspicious String in TLS Subject (metasploit)"; flow:established,to_client; content:"metasploit"; nocase; classtype:bad-unknown; sid:2610271; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Hafnium Webshell Access"; flow:established; http.uri; content:"/aspnet_client/"; fast_pattern; content:".asp"; classtype:bad-unknown; sid:2610272; rev:1;)
 
-#eval( in POST Body
+alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP URI"; flow:established; http.uri; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610273; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Client Body"; flow:established; http.request_body; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610274; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Server Body"; flow:established; http.response_body; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610275; rev:1;)
 
+alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT MS Copyright Banner Inbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610276; rev:1;)
+
+alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610277; rev:1;)
 
