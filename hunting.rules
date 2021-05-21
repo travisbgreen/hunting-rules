@@ -280,6 +280,6 @@ alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbou
 
 alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python SimpleHTTP Server"; flow:established,from_server; http.server; content:"SimpleHTTP/"; file_data; content:"MZ"; within:2; content:"PE|00 00|"; distance:0; classtype:attempted-admin; sid:2610278; rev:1;)
 
-alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntids.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610280; rev:1;)
+alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610280; rev:1;)
 
-alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntids.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610282; rev:1;)
+alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610282; rev:1;)
