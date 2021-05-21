@@ -238,11 +238,6 @@ alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; 
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name (impacket)"; flow:established; content:"impacket("; classtype:attempted-user; sid:2610255; rev:1;)
 
-# too common :(
-#alert http any any -> any any (msg:"TGI HUNT CS3 Default User-Agent"; flow:established; content:"Mozilla/5.0 (Windows NT 6.1|3b| WOW64|3b| Trident/7.0|3b| rv:11.0) like Gecko"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610256; rev:1;)
-
-#alert http any any -> any any (msg:"TGI HUNT CS3 Threatxpress Default User-Agent"; flow:established; content:"Mozilla/5.0 (Windows NT 6.3|3b| Trident/7.0|3b| rv:11.0) like Gecko"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610257; rev:1;)
-
 alert http any any -> any any (msg:"TGI HUNT CS4 Default User-Agent"; flow:established; content:"Mozilla/5.0 (compatible|3b| MSIE 9.0|3b| Windows NT 6.1|3b| Trident/5.0|3b| BOIE9|3b|ENAU)"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610258; rev:1;)
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Excel Template Injection"; flow:to_server,established; content:".dotm?raw=true"; http_uri; fast_pattern; reference:url,twitter.com/jstrosch/status/1267471477458288642; classtype:trojan-activity; sid:2610259; rev:1;)
@@ -283,3 +278,8 @@ alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT MS Copyright Banner Inboun
 
 alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610277; rev:1;)
 
+alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python SimpleHTTP Server"; flow:established,from_server; http.server; content:"SimpleHTTP/"; file_data; content:"MZ"; within:2; content:"PE|00 00|"; distance:0; classtype:attempted-admin; sid:2610278; rev:1;)
+
+alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntids.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610280; rev:1;)
+
+alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntids.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610282; rev:1;)
