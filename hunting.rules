@@ -283,3 +283,15 @@ alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python Sim
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610280; rev:1;)
 
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610282; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT ysoserial Payload Inbound"; flow:to_server,established; content:"ysoserial.payloads"; nocase; reference:url,github.com/foxglovesec/JavaUnserializeExploits; classtype:attempted-admin; sid:2610283; rev:1;)
+
+alert http any any -> [$HOME_NET,$HTTP_SERVERS] any (msg:"TGI HUNT Unsafe Java Runtime Method Inbound"; flow:established,to_server; content:"getRuntime"; nocase; fast_pattern; content:"exec"; nocase; distance:0; pcre:"/\x2e\s*getRuntime\s*\x28\s*\x29\s*\.\s*exec\s*\x28/i"; reference:cve,2019-7238; reference:url,github.com/mpgn/CVE-2019-7238; classtype:attempted-admin; sid:2610286; rev:1;)
+
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Powershell String in HTTP"; flow:established; content:"JABzAD0AT"; fast_pattern; classtype:bad-unknown; sid:2610287; rev:1;)
+
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious admin:admin B64 String in HTTP"; flow:established; content:"YWRtaW46YWRtaW4"; fast_pattern; classtype:bad-unknown; sid:2610288; rev:1;)
+
+
+
+
