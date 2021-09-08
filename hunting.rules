@@ -292,6 +292,42 @@ alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Powershell String i
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious admin:admin B64 String in HTTP"; flow:established; content:"YWRtaW46YWRtaW4"; fast_pattern; classtype:bad-unknown; sid:2610288; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"3RhY2tNYXBUYW"; fast_pattern; classtype:bad-unknown; sid:2610289; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"M1MDQzMjg0NTY"; fast_pattern; classtype:bad-unknown; sid:2610290; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"czsMADIAMwoAKwA0AQ"; fast_pattern; classtype:bad-unknown; sid:2610291; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"AHhzcgARamF2YS51dGlsLkh"; fast_pattern; classtype:bad-unknown; sid:2610292; rev:1;)
+
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious JexRemoteTools.jar String in HTTP"; flow:established; content:"JexReverse.class"; fast_pattern; classtype:bad-unknown; sid:2610293; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT (testing) Possible Cobalt Strike HTTP Response"; flow:established,to_client; content:"HTTP/1.1|20|404|20|Not Found|0d 0a|Date|3a 20|"; startswith; content:"|20|GMT|0d 0a|Content-Type|3a 20|text/plain|0d 0a|Content-Length|3a 20|0|0d 0a 0d 0a|"; distance:0; endswith; content:!"Server|3a 20|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610294; rev:3;)
+
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Vulnscan String in HTTP"; flow:established; content:"cHJpbnQobWQ1KDMxMzM3KSk7"; fast_pattern; classtype:bad-unknown; sid:2610295; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (postex_)"; flow:established; content:"|5c|pipe"; content:"|5c|postex_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610296; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (postex_)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|p|00|o|00|s|00|t|00|e|00|x|00|_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610297; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (postex_ssh_)"; flow:established; content:"|5c|pipe"; content:"|5c|postex_ssh_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610298; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (postex_ssh_)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|p|00|o|00|s|00|t|00|e|00|x|00|_|00|s|00|s|00|h"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610299; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (status_)"; flow:established; content:"|5c|pipe"; content:"|5c|status_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610300; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (status_)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|s|00|t|00|a|00|t|00|u|00|s|00|_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610301; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (msagent_)"; flow:established; content:"|5c|pipe"; content:"|5c|msagent_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610302; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (msagent_)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|m|00|s|00|a|00|g|00|e|00|n|00|t|00|_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610303; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (MSSE-)"; flow:established; content:"|5c|pipe"; content:"|5c|MSSE-"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610304; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (MSSE-)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|M|00|S|00|S|00|E|00|-"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610305; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe ASCII (halfduplex_)"; flow:established; content:"|5c|pipe"; content:"|5c|halfduplex_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610306; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Suspicious Named Pipe UTF-16LE (halfduplex_)"; flow:established; content:"|5c|p|00|i|00|p|00|e"; content:"|5c 00|h|00|a|00|l|00|f|00|d|00|u|00|p|00|l|00|e|00|x|00|_"; distance:0; reference:url,blog.cobaltstrike.com/2021/02/09/learn-pipe-fitting-for-all-of-your-offense-projects/; sid:2610307; rev:1; metadata:mitre_tactic_id TA0008, mitre_technique_id T1071;)
+
+alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610308; rev:1;)
