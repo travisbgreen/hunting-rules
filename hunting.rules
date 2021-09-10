@@ -306,4 +306,4 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT (testing) Possible 
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Vulnscan String in HTTP"; flow:established; content:"cHJpbnQobWQ1KDMxMzM3KSk7"; fast_pattern; classtype:bad-unknown; sid:2610295; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610308; rev:1;)
+alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610297; rev:1;)
