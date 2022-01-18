@@ -364,9 +364,9 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT (testing) Possible 
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Vulnscan String in HTTP"; flow:established; content:"cHJpbnQobWQ1KDMxMzM3KSk7"; fast_pattern; classtype:bad-unknown; sid:2610728; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610732; rev:1;)
+alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; http.request_body; content:!"TaniumSOAP"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610732; rev:1;)
 
-alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Host Artifact String in HTTP"; flow:established; content:"TWljcm9zb2Z0IFdpbmRvd3Mg"; fast_pattern; classtype:bad-unknown; sid:2610736; rev:1;)
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Host Artifact String in HTTP (base64 Microsoft Windows)"; flow:established; content:"TWljcm9zb2Z0IFdpbmRvd3Mg"; fast_pattern; classtype:bad-unknown; sid:2610736; rev:1;)
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Suspicious String in HTTP (base64 admin:admin)"; flow:established; content:"YWRtaW46YWRtaW4="; fast_pattern; classtype:bad-unknown; sid:2610740; rev:1;)
 
@@ -392,7 +392,7 @@ alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF16-LE)"; flow:est
 
 alert tcp any any -> any any (msg:"TGI HUNT T3 Java Serialized Object Header Observed"; flow:established; content:"|74 33 20 31 32 2e 32 2e 31 0a 41 53 3a 32 35 35|"; fast_pattern; classtype:bad-unknown; sid:2610784; rev:1;)
 
-alert tcp any any -> any any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; classtype:bad-unknown; sid:2610788; rev:1;)
+alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; classtype:bad-unknown; sid:2610788; rev:1;)
 
 alert tcp any any -> any any (msg:"TGI HUNT Java Serialized Object Common Shell Strings Observed"; flow:established; content:"|ac ed 00|"; content:"org.apache.commons.collections"; fast_pattern; classtype:bad-unknown; sid:2610792; rev:1;)
 
@@ -400,12 +400,21 @@ alert tcp any any -> any any (msg:"TGI HUNT DHT BitTorrent Test sig"; flow:estab
 
 alert tcp any any -> any any (msg:"TGI HUNT log4j with Base64"; flow:established; content:"jndi|3a|"; fast_pattern; content:"Base64"; nocase; classtype:bad-unknown; sid:2610800; rev:1;)
 
-alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Curl to IP address"; flow:established,to_server; http.user_agent; content:"curl/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610804; rev:1;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Curl to IP Address"; flow:established,to_server; http.user_agent; content:"curl/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610804; rev:1;)
 
-alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Wget User-Agent to Dotted Quad"; flow:established,to_server; http.user_agent; content:"Wget/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610808; rev:1;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Wget User-Agent to IP Address"; flow:established,to_server; http.user_agent; content:"Wget/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610808; rev:1;)
 
-alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Python User-Agent to Dotted Quad"; flow:established,to_server; http.user_agent; content:"Python"; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610810; rev:1;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Python User-Agent to IP Address"; flow:established,to_server; http.user_agent; content:"Python"; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610810; rev:1;)
 
 alert dns any any -> any any (msg:"TGI HUNT dnscat in DNS Query"; flow:established; dns_query; content:"dnscat"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/iagox86/dnscat2; classtype:bad-unknown; sid:2610812; rev:1;)
 
 alert tcp any any -> any any (msg:"TGI HUNT PE File b64 and compressed"; flow:established; content:"7b0HYBxJliUmL23Ke39K9UrX"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/lukebaggett/dnscat2-powershell/blob/master/dnscat2.ps1; classtype:bad-unknown; sid:2610814; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Vulntest Inbound"; flow:established,to_server; http.uri; content:"touch"; pcre:"/(?:\x60|\x24|\x3b)/Ui"; classtype:bad-unknown; sid:2610816; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Vulntest Inbound"; flow:established,to_server; http.user_agent; content:"GIS - AppSec Team"; classtype:bad-unknown; sid:2610818; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifact Inbound (MODDNA)"; flow:established,to_client; content:"MODDNA"; classtype:bad-unknown; sid:2610820; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifact Inbound (xlAutoOpen)"; flow:established,to_client; content:"xlAutoOpen"; classtype:bad-unknown; sid:2610822; rev:1;)
+
