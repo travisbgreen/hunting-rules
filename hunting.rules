@@ -1,4 +1,5 @@
 # sid range 2610000-2619999
+# tar czvf hunting.rules.tar.gz hunting.rules && md5sum hunting.rules.tar.gz > hunting.rules.tar.gz.md5
 
 ## abused TLD rules
 alert dns any any -> any any (msg:"TGI HUNT Abused TLD .tk in DNS"; flow:established; dns_query; content:".tk"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610006; rev:1;)
@@ -422,7 +423,7 @@ alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Freque
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT WAF MITM of HTTPS"; flow:established,to_server; http.header; content:"X-forwarded-proto"; nocase; pcre:"/^[^\r\n]*https/Ri"; classtype:misc-activity; sid:2610826; rev:1;)
 
-alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Log4shell Obfuscation Technique"; flow:established; http.uri; content:"${"; fast_pattern; pcre:"/j[ndi]*${(?:(?:low|upp)er|(?:k8|sy)s|date|main|env|web|:):/i"; reference:url,twitter.com/ymzkei5/status/1469765165348704256; classtype:bad-unknown; sid:2610828; rev:1;)
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Log4shell Obfuscation Technique"; flow:established; http.uri; content:"${"; fast_pattern; pcre:"/j[ndi]*\${(?:(?:low|upp)er|(?:k8|sy)s|date|main|env|web|:):/i"; reference:url,twitter.com/ymzkei5/status/1469765165348704256; classtype:bad-unknown; sid:2610828; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Powershell Defender Exclusion Inbound (Set-MpPreference)"; flow:established,to_client; content:"Set-MpPreference"; nocase; classtype:bad-unknown; sid:2610830; rev:1;)
 
