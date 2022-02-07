@@ -408,7 +408,7 @@ alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Python User-Agent t
 
 alert dns any any -> any any (msg:"TGI HUNT dnscat in DNS Query"; flow:established; dns_query; content:"dnscat"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/iagox86/dnscat2; classtype:bad-unknown; sid:2610812; rev:1;)
 
-alert tcp any any -> any any (msg:"TGI HUNT PE File b64 and compressed"; flow:established; content:"7b0HYBxJliUmL23Ke39K9UrX"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/lukebaggett/dnscat2-powershell/blob/master/dnscat2.ps1; classtype:bad-unknown; sid:2610814; rev:1;)
+alert tcp any any -> any any (msg:"TGI HUNT PE File b64 and compressed"; flow:established,to_client; content:"7b0HYBxJliUmL23Ke39K9UrX"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/lukebaggett/dnscat2-powershell/blob/master/dnscat2.ps1; classtype:bad-unknown; sid:2610814; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Vulntest Inbound"; flow:established,to_server; http.uri; content:"touch"; pcre:"/(?:\x60|\x24|\x3b)/Ui"; classtype:bad-unknown; sid:2610816; rev:1;)
 
@@ -418,3 +418,18 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifa
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifact Inbound (xlAutoOpen)"; flow:established,to_client; content:"xlAutoOpen"; classtype:bad-unknown; sid:2610822; rev:1;)
 
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (fastly)"; flow:established,to_server; content:"POST"; http_method; content:".fastly.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610824; rev:1;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT WAF MITM of HTTPS"; flow:established,to_server; http.header; content:"X-forwarded-proto"; nocase; pcre:"/^[^\r\n]*https/Ri"; classtype:misc-activity; sid:2610826; rev:1;)
+
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Log4shell Obfuscation Technique"; flow:established; http.uri; content:"${"; fast_pattern; pcre:"/j[ndi]*${(?:(?:low|upp)er|(?:k8|sy)s|date|main|env|web|:):/i"; reference:url,twitter.com/ymzkei5/status/1469765165348704256; classtype:bad-unknown; sid:2610828; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Powershell Defender Exclusion Inbound (Set-MpPreference)"; flow:established,to_client; content:"Set-MpPreference"; nocase; classtype:bad-unknown; sid:2610830; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Powershell Defender Exclusion Inbound (Add-MpPreference)"; flow:established,to_client; content:"Add-MpPreference"; nocase; classtype:bad-unknown; sid:2610832; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"Yml0Y29pb"; classtype:bad-unknown; sid:2610834; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610836; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610838; rev:1;)
