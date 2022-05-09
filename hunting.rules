@@ -159,7 +159,7 @@ alert http any any -> any any (msg:"TGI HUNT HTTP POST to wp-.* without referer"
 #alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT Oracle Server Probe"; flow:to_server,established; content:"(DESCRIPTION=(CONNECT_DATA=(SID=";threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610314; rev:1;)
 alert tls any any -> any any (msg:"TGI HUNT BurpSuite string in TLS"; flow:established; content:"|0b|PortSwigger"; distance:1; within:12; reference:url,portswigger.net/burp/proxy.html; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610316; rev:1;)
 alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-library Indy"; flow:established,to_server; content:"|0d 0a|X-Library|3a| Indy|20|"; nocase; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610318; rev:6;)
-alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer MS CDO"; flow:established; content:"X-Mailer|3a 20|Microsoft CDO for Windows"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610320; rev:6;)
+# alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer MS CDO"; flow:established; content:"X-Mailer|3a 20|Microsoft CDO for Windows"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610320; rev:6;)
 alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer Blat"; flow:established; content:"X-Mailer|3a 20|Blat v"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610322; rev:6;)
 #alert tcp-pkt any any -> any any (msg:"TGI HUNT Too many \x41"; flow:established; content:"|41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610324; rev:1;)
 #alert tcp-pkt any any -> any any (msg:"TGI HUNT Too many \x90"; flow:established; content:"|90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610326; rev:1;)
@@ -434,3 +434,11 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String I
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610836; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610838; rev:1;)
+
+# alert ip [64.39.96.0/20] any -> $HOME_NET any (msg:"TGI HUNT Qualys PCI Compliance Scanning Address Inbound"; flow:established,to_server; classtype:bad-unknown; sid:2610840; rev:1;)
+
+alert tcp any any -> any any (msg:"TGI HUNT Bare LDAP Query for Domain Computers (BlackByte syntax)"; flow:established; content:"(&(objectClass=computer))"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610842; rev:1;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Mythic Example C2 Profile Artifacts"; flow:established,to_server; http.uri; content:"/data"; endswith; http.user_agent; content:"Mozilla/5.0 (Windows NT 6.3|3b| Trident/7.0|3b| rv:11.0) like Gecko"; classtype:bad-unknown; sid:2610844; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (admin:)"; flow:established; content:"YWRtaW46"; classtype:bad-unknown; sid:2610845; rev:1;)
