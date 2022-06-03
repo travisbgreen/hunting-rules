@@ -442,3 +442,7 @@ alert tcp any any -> any any (msg:"TGI HUNT Bare LDAP Query for Domain Computers
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Mythic Example C2 Profile Artifacts"; flow:established,to_server; http.uri; content:"/data"; endswith; http.user_agent; content:"Mozilla/5.0 (Windows NT 6.3|3b| Trident/7.0|3b| rv:11.0) like Gecko"; classtype:bad-unknown; sid:2610844; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (admin:)"; flow:established; content:"YWRtaW46"; classtype:bad-unknown; sid:2610845; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (pty implant)"; flow:established; content:"import pty"; content:"pty.spawn"; distance:0; classtype:bad-unknown; sid:2610846; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (RealCMD webshell)"; flow:established; content:"runCmd"; content:"RealCMD"; content:"buildJson"; content:"Encrypt"; classtype:bad-unknown; sid:2610847; rev:1;)
