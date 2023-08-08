@@ -1,4 +1,6 @@
+
 ## abused TLD rules
+
 alert dns any any -> any any (msg:"TGI HUNT Abused TLD .tk in DNS"; flow:established; dns_query; content:".tk"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610006; rev:1;)
 alert dns any any -> any any (msg:"TGI HUNT Abused TLD .ml in DNS"; flow:established; dns_query; content:".ml"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610008; rev:1;)
 alert dns any any -> any any (msg:"TGI HUNT Abused TLD .ga in DNS"; flow:established; dns_query; content:".ga"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610010; rev:1;)
