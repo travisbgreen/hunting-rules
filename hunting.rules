@@ -3,283 +3,543 @@
 
 ## vulntesting domains
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (scannermcscanface-edgescan.com in DNS Lookup)"; dns_query; content:"scannermcscanface-edgescan.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610178; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (scannermcscanface-edgescan .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"scannermcscanface-edgescan.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610180; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (w.nessus.org in DNS Lookup)"; dns_query; content:"w.nessus.org"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610182; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (w .nessus .org in TLS SNI)"; flow:established,to_server; tls_sni; content:"w.nessus.org"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610184; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (notburpcollaborator.net in DNS Lookup)"; dns_query; content:"notburpcollaborator.net"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610186; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (notburpcollaborator .net in TLS SNI)"; flow:established,to_server; tls_sni; content:"notburpcollaborator.net"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610188; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (pwn.af in DNS Lookup)"; dns_query; content:"pwn.af"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610190; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (pwn .af in TLS SNI)"; flow:established,to_server; tls_sni; content:"pwn.af"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610192; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (leakix.net in DNS Lookup)"; dns_query; content:"leakix.net"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610194; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (leakix .net in TLS SNI)"; flow:established,to_server; tls_sni; content:"leakix.net"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610196; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (interactsh.com in DNS Lookup)"; dns_query; content:"interactsh.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610198; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (interactsh .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"interactsh.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610200; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (interact.sh in DNS Lookup)"; dns_query; content:"interact.sh"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610202; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (interact .sh in TLS SNI)"; flow:established,to_server; tls_sni; content:"interact.sh"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610204; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (burpcollaborator.net in DNS Lookup)"; dns_query; content:"burpcollaborator.net"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610206; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (burpcollaborator .net in TLS SNI)"; flow:established,to_server; tls_sni; content:"burpcollaborator.net"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610208; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (canarytokens.com in DNS Lookup)"; dns_query; content:"canarytokens.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610210; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (canarytokens .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"canarytokens.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610212; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (kryptoslogic-cve-2021-44228.com in DNS Lookup)"; dns_query; content:"kryptoslogic-cve-2021-44228.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610214; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (kryptoslogic-cve-2021-44228 .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"kryptoslogic-cve-2021-44228.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610216; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (http80path.kryptoslogic-cve-2021-44228.com in DNS Lookup)"; dns_query; content:"http80path.kryptoslogic-cve-2021-44228.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610218; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (http80path .kryptoslogic-cve-2021-44228 .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"http80path.kryptoslogic-cve-2021-44228.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610220; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (dnslog.cn in DNS Lookup)"; dns_query; content:"dnslog.cn"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610222; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (dnslog .cn in TLS SNI)"; flow:established,to_server; tls_sni; content:"dnslog.cn"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610224; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (world443.log4j.binaryedge.io in DNS Lookup)"; dns_query; content:"world443.log4j.binaryedge.io"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610226; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (world443 .log4j .binaryedge .io in TLS SNI)"; flow:established,to_server; tls_sni; content:"world443.log4j.binaryedge.io"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610228; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (world80.log4j.binaryedge.io in DNS Lookup)"; dns_query; content:"world80.log4j.binaryedge.io"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610230; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (world80 .log4j .binaryedge .io in TLS SNI)"; flow:established,to_server; tls_sni; content:"world80.log4j.binaryedge.io"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610232; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (scanworld.net in DNS Lookup)"; dns_query; content:"scanworld.net"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610234; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (scanworld .net in TLS SNI)"; flow:established,to_server; tls_sni; content:"scanworld.net"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610236; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (oob.li in DNS Lookup)"; dns_query; content:"oob.li"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610238; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (oob .li in TLS SNI)"; flow:established,to_server; tls_sni; content:"oob.li"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610240; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (bingsearchlib.com in DNS Lookup)"; dns_query; content:"bingsearchlib.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610242; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (bingsearchlib .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"bingsearchlib.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610244; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (requestbin.net in DNS Lookup)"; dns_query; content:"requestbin.net"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610246; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (requestbin .net in TLS SNI)"; flow:established,to_server; tls_sni; content:"requestbin.net"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610248; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (rce.ee in DNS Lookup)"; dns_query; content:"rce.ee"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610250; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (rce .ee in TLS SNI)"; flow:established,to_server; tls_sni; content:"rce.ee"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610252; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (ceye.io in DNS Lookup)"; dns_query; content:"ceye.io"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610254; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (ceye .io in TLS SNI)"; flow:established,to_server; tls_sni; content:"ceye.io"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610256; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (log4shell.huntress.com in DNS Lookup)"; dns_query; content:"log4shell.huntress.com"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610258; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (log4shell .huntress .com in TLS SNI)"; flow:established,to_server; tls_sni; content:"log4shell.huntress.com"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610260; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (dns.cyberwar.nl in DNS Lookup)"; dns_query; content:"dns.cyberwar.nl"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610262; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (dns .cyberwar .nl in TLS SNI)"; flow:established,to_server; tls_sni; content:"dns.cyberwar.nl"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610264; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (log.exposedbotnets.ru in DNS Lookup)"; dns_query; content:"log.exposedbotnets.ru"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610266; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (log .exposedbotnets .ru in TLS SNI)"; flow:established,to_server; tls_sni; content:"log.exposedbotnets.ru"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610268; rev:1;)
+
 alert dns $HOME_NET any -> any any (msg:"TGI HUNT VulnTesting Domain (service.exfil.site in DNS Lookup)"; dns_query; content:"service.exfil.site"; isdataat:!1,relative; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610270; rev:1;)
+
 alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT VulnTesting Domain (service .exfil .site in TLS SNI)"; flow:established,to_server; tls_sni; content:"service.exfil.site"; isdataat:!1,relative; nocase; reference:url,gist.github.com/travisbgreen/3f7ddcd5841d802e536d5854e2218e8c; classtype:trojan-activity; sid:2610272; rev:1;)
 
-## hunting / hueristic rules
+## hunting / heuristic rules
 alert http any any -> any any (msg:"TGI HUNT unknown command 610cker"; flow:to_server,established; content:"POST"; http_method; content:"/command.php"; http_uri; content:"cmd="; http_client_body; depth:4; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610278; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT unknown etherium server probe"; flow:to_server,established; content:"POST"; http_method; urilen:1; content:"method|22 3a 22|eth_accounts"; http_client_body; http_content_type; content:"application/json"; reference:url,github.com/ethereum/wiki/wiki/JSON-RPC; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610280; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Graves Accent (backtick) in HTTP Header"; flow:established,to_server; content:"`"; http_header; content:!"`"; http_client_body; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610282; rev:2;)
+
 alert http any any -> any any (msg:"TGI HUNT Content-Type jpeg serving PE likely hostile"; flow:established,from_server; content:"200"; http_stat_code; content:"Content-Type|3a 20|image/jpeg"; http_header; file_data; content:"MZ"; depth:2; byte_jump:4,58,relative,little; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610284; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT directory traversal in Zip"; flow:established; content:"PK"; content:"|2e 2e 5c|"; distance:28; within:3; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610286; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP POST"; flow:established; content:"shell_exec("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610288; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP"; flow:established; content:"eval("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610290; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT two %25 in HTTP URI"; flow:to_server,established; content:"%25"; http_raw_uri; content:"%25"; http_raw_uri; distance:0; within:4; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610292; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in HTTP POST"; flow:to_server,established; content:"%2525"; nocase; http_client_body; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610294; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Serialized Object PHP inbound"; flow:established,to_server; content:"O|3a|"; pcre:"/\d+\x3a[ -~]*?\x3a\d+\x3a\{/iR"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610296; rev:2;)
-#alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in URI <>"; flow:to_server,established; content:"%253C"; nocase; http_raw_uri; content:"%253E"; nocase; http_raw_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610298; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in URI x28 x29"; flow:to_server,established; content:"%2528"; nocase; http_raw_uri; content:"%2529"; nocase; http_raw_uri;threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610300; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in URI x3a"; flow:to_server,established; content:"%253A"; nocase; http_raw_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610302; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in URI x3b"; flow:to_server,established; content:"%253B"; nocase; http_raw_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610304; rev:1;)
-#alert http any any -> any any (msg:"TGI HUNT Suspicous HTTP URI and Referer are the same"; flow:established,to_server; content:"GET "; depth:4; pcre:"/^\/(.+) HTTP.*Referer[^\r\n]+\1\r\n/Rs"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610306; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Double Transfer-Encoding Header (possible evasion)"; flow:established,to_server; content:"Transfer-Encoding|3a 20|"; http_header; fast_pattern; content:"Transfer-Encoding|3a 20|"; http_header; distance:0; reference:url,noxxi.de/research/http-evader-explained-3-chunked.html; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610308; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT HTTP/1.0 and Transfer-Encoding Header (possible evasion)"; flow:established,to_server; content:"Transfer-Encoding|3a 20|"; http_header; fast_pattern; content:"HTTP/1.0"; depth:8; reference:url,noxxi.de/research/http-evader-explained-3-chunked.html; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610310; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT HTTP POST to wp-.* Path Without Referer"; flow:established,to_server; content:"POST"; http_method; content:"/wp-"; http_uri; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown;sid:2610312; rev:1;)
+
 #alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT Oracle Server Probe"; flow:to_server,established; content:"(DESCRIPTION=(CONNECT_DATA=(SID=";threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610314; rev:1;)
+
 alert tls any any -> any any (msg:"TGI HUNT BurpSuite string in TLS"; flow:established; content:"|0b|PortSwigger"; distance:1; within:12; reference:url,portswigger.net/burp/proxy.html; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610316; rev:1;)
+
 alert tcp any any -> any [25,587] (msg:"TGI HUNT Suspicious x-library Indy"; flow:established,to_server; content:"|0d 0a|X-Library|3a| Indy|20|"; nocase; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610318; rev:6;)
-# alert tcp any any -> any [25,587] (msg:"TGI HUNT suspicious x-mailer MS CDO"; flow:established; content:"X-Mailer|3a 20|Microsoft CDO for Windows"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610320; rev:6;)
+
 alert tcp any any -> any [25,587] (msg:"TGI HUNT Suspicious x-mailer Blat"; flow:established; content:"X-Mailer|3a 20|Blat v"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610322; rev:6;)
+
 #alert tcp-pkt any any -> any any (msg:"TGI HUNT Too many \x41"; flow:established; content:"|41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610324; rev:1;)
+
 #alert tcp-pkt any any -> any any (msg:"TGI HUNT Too many \x90"; flow:established; content:"|90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610326; rev:1;)
+
 #alert dns any any -> any any (msg:"TGI HUNT WPAD Request"; dns_query; content:"wpad"; nocase; startswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610328; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT netsh firewall"; flow:established; content:"netsh firewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610330; rev:1;)
+
 alert ip any any -> any any (msg:"TGI HUNT netsh advfirewall"; flow:established; content:"netsh advfirewall"; content:!"This example shows  how to disable Wmi fixed port"; distance:-730; within: 50; content:!"from administrator command prompt window"; distance:22; within:45; threshold:type limit, track by_src, seconds 60, count 1; sid:2610332; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT WMIC Prompt"; flow:established; content:"wmic|3a|root|5c|cli>"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610336; rev:1;)
-alert tcp any any -> any any (msg:"TGI HUNT sc output"; flow:established; content:"SERVICE_NAME|3a|"; pcre:"/\s*([ -~]+?) *TYPE *\x3a *(\d+)/iR, flow:TGIHUNT.SC.ServiceName, flow:TGIHUNT.SC.Type"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610338; rev:1;)
+
+alert tcp any any -> any any (msg:"TGI HUNT sc.exe Output"; flow:established; content:"SERVICE_NAME|3a|"; pcre:"/\s*([ -~]+?) *TYPE *\x3a *(\d+)/iR"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610338; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT Unknown Login Attempt"; flow:established; content:"Action|3a 20|Login"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610340; rev:1;)
+
 #alert http any any -> any any (msg:"TGI HUNT non printable char in HTTP Header"; flow:established,to_server; pcre:"/^[\x20-\x7e\r\n]{0,20}[^\x20-\x7e\r\n]/H"; http_content_type; content:!"application/ocsp-response"; threshold:type limit, track by_src, seconds 180, count 1; classtype:bad-unknown; sid:2610342; rev:1;)
+
 #alert http any any -> any any (msg:"TGI HUNT fromcharcode in HTTP"; flow:established; content:!"jQuery Foundation, Inc"; content:"fromcharcode"; nocase; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610344; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT PHP magic bytes in HTTP response"; flow:established,to_client; content:"<?php"; nocase; content:!"+65"; distance:0; within:3; threshold:type limit, track by_src, seconds 60, count 1; metadata: created_at 2001_01_01, updated_at 2023_11_30; classtype:bad-unknown; sid:2610346; rev:2;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"DELETE"; http_header; content:"FROM"; http_header; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610348; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"EXEC"; http_header; content:"FROM"; http_header; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610350; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"INSERT"; http_header; content:"INTO"; http_header; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610352; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"SELECT"; http_header; pcre:"/\b(?:INTO|FROM|USER|UPPER|LOWER|CONCAT)\b/RH";threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610354; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"SHOW"; http_header;  pcre:"/\b(?:CHAR|CUR|TABLE|VAR)/RH";threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610356; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"UNION"; http_header; content:"SELECT"; http_header; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610358; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established,to_server; content:"UPDATE"; http_header; content:"SET"; http_header; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610360; rev:1;)
+
 #alert http any any -> !$HOME_NET any (msg:"TGI HUNT HTTP uncommon version Request"; flow:established,to_server; content:"|20|HTTP/"; content:!"1.1"; within:3; content:!"1.0"; within:3; flowbits:isnotset,hunt.entrust_entelligence; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610362; rev:1;)
+
 #alert http any any -> any any (msg:"TGI HUNT HTTP suspicious UA"; flow:established; content:"bot"; nocase; http_user_agent; content:!"YandexBot/"; http_user_agent; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610364; rev:1;)
+
 #alert http any any -> any any (msg:"TGI HUNT HTTP uncommon version Response"; flow:established,to_client; content:"HTTP/"; depth:5; content:!"1.1"; within:3; content:!"1.0"; within:3; flowbits:isnotset,hunt.entrust_entelligence; content:!"BigIP"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610366; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT WScript.Shell Inbound"; flow:established,to_client; file_data; content:"WScript.Shell"; nocase; classtype:bad-unknown; sid:2610368; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT .bin HTTP download missing headers"; flow:established,to_server; content:".bin"; http_uri; endswith; http_header_names; content:"|0d 0a|Host|0d 0a|Connection|0d 0a 0d 0a|"; classtype:bad-unknown; sid:2610370; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT wmic process call create"; flow:established; content:"wmic process call create"; classtype:bad-unknown; sid:2610372; rev:1;)
+
 alert tcp any any -> any any (msg:"IBM WebSphere Application Server probe"; flow:established; content:"SOAPAction: urn:AdminService|0d 0a|"; http_header; reference:url,github.com/breenmachine/JavaUnserializeExploits/blob/master/websphere-soap-exploit.request; classtype:bad-unknown; sid:2610374; rev:1;)
+
 #alert ftp any any -> any any (msg:"TGI HUNT FTP STOR Command"; flow:established; content:"STOR|20|"; classtype:bad-unknown; sid:2610376; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT PHP Magic Bytes in HTTP Request"; flow:established,to_server; content:"<?php"; nocase; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610378; rev:1;)
+
 #alert http any any -> any any (msg:"TGI HUNT POST Without Referer Header"; flow:established,to_server; content:"POST"; http_method; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 180, count 1; http_content_type; content:!"application/ocsp-response"; classtype:bad-unknown; sid:2610380; rev:1;)
+
 alert ip any any -> any any (msg:"TGI HUNT sameip Keyword Test Rule"; flow:established,to_server; sameip; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610382; rev:1;)
+
 #alert tls any any -> any any (msg:"TGI HUNT TLS Suspicious facebook.com"; tls_cert_subject; content:"facebook.com"; tls_cert_fingerprint; content:!"98:e4:dd:9d:21:83:d5:29:9e:80:43:73:ff:f2:a7:e1:c4:87:9f:5e"; classtype:bad-unknown; sid:2610384; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Content-Type jpeg Serving Zip"; flow:established,from_server; content:"200"; http_stat_code; content:"Content-Type|3a 20|image/jpeg"; http_header; file_data; content:"PK"; depth:2; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610386; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious vbs Function Inbound"; flow:established,from_server; content:"200"; http_stat_code; file_data; content:"new-object -com|20|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610388; rev:1;)
+
 alert udp $HOME_NET any -> any 53 (msg:"TGI HUNT Large DNS Query not TCP"; content:"|01 00 00 01 00 00 00 00 00 00|"; fast_pattern; depth:10; offset:2; dsize:>512; classtype:bad-unknown; sid:2610390; rev:8;)
+
 # turns out double encoded characters are quite common in redirect urls
 #alert http any any -> any any (msg:"TGI HUNT Double Encoded Characters in HTTP URI"; flow:to_server,established; content:"%2525"; http_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610394; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Path"; flow:to_server,established; content:"/Panel/"; http_uri; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610396; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Response (localhost)"; flow:to_client,established; content:"Server|3a 20|localhost|0d 0a|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610398; rev:1;)
+
 #alert ip any any -> any any (msg:"TGI HUNT non-DiffServ aware TOS setting"; flow:established,to_server; tos:!0; tos:!8; tos:!16; tos:!24; tos:!32; tos:!40; tos:!48; tos:!56; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610400; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response"; flow:to_client,established; file_data; content:"There's been an awakening... have you felt it?"; threshold:type limit,track by_src,seconds 60,count 1; classtype:bad-unknown; sid:2610402; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x86 1"; flow:to_client,established; file_data; content:"|89 71 04 89|"; content:"|30 8d 04 bd|"; within:8; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2610404; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x86 2"; flow:to_client,established; file_data; content:"|8b 4d|"; content:"|8b 45 f4 89 75|"; within:6; content:"|89 01 85 ff 74|"; within:6; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2610406; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x64 1"; flow:to_client,established; file_data; content:"|33 ff|"; content:"|89 37|"; within:3; content:"|8b f3 45 85|"; within:5; content:"|74|"; within:2; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2610408; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT MimiKatz String in HTTP Response x64 2"; flow:to_client,established; file_data; content:"|4c 8b df 49|"; content:"|c1 e3 04 48|"; within:8; content:"|8b cb 4c 03|"; within:8; content:"|d8|"; within:2; threshold:type limit,track by_src,seconds 60,count 1; reference:url,github.com/gentilkiwi/mimikatz/releases; classtype:bad-unknown; sid:2610410; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST"; flow:to_server,established; content:"LaZagne Project"; http_client_body; classtype:bad-unknown; sid:2610412; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT LaZagne Artifact in HTTP POST 2"; flow:to_server,established; content:"|20|passwords -----------------"; http_client_body; classtype:bad-unknown; sid:2610414; rev:1;)
-#alert tls any any -> any any (msg:"TGI HUNT DNS over TLS JA3 SSL-Client Fingerprint Detected (Stubby)"; ja3_hash; content:"c369db2c355ad05c76f5660af3179b01"; reference:url,www.linuxbabe.com/ubuntu/ubuntu-stubby-dns-over-tls; sid:2610416; rev:1;)
-# too common to be useful
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Emotet/AutoIt/Ursnif)"; ja3_hash; content:"4d7a28d6f2263ed61de88ca66eb011e3"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2610420; rev:1;)
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"6734f37431670b3ab4292b8f60f29984"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2610422; rev:1;)
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (Trickbot)"; ja3_hash; content:"e7d705a3286e19ea42f587b344ee6865"; reference:url,engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967; sid:2610424; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT mimikatz Artifacts in HTTP POST"; flow:to_server,established; content:"S-1-5-21-"; fast_pattern; nocase; http_client_body; content:"Username"; nocase; http_client_body; content:"Domain"; nocase; http_client_body; content:"NTLM"; nocase; http_client_body; content:"SHA1"; nocase; http_client_body; classtype:bad-unknown; sid:2610426; rev:2;)
+
 alert http any any -> any any (msg:"TGI HUNT Invoke-ReflectivePEInjection Likely Malicious PS Inbound"; flow:from_server,established; content:"Write-BytesToMemory"; content:"Invoke-CreateRemoteThread"; content:"VirtualAllocEx"; content:"WriteProcessMemory"; classtype:bad-unknown; sid:2610428; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Non Browser HTTP to Pastebin"; flow:to_server,established; content:"pastebin.com"; http_host; content:!"Mozilla"; nocase; http_user_agent; classtype:bad-unknown; sid:2610430; rev:1;)
-# too common to be useful
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (IcedID/Orcus/.net WebClient().DownloadString()/js.griffon/WinHttpConnect)"; ja3_hash; content:"1d095e68489d3c535297cd8dffb06cb9"; reference:md5,de3ea56487dd2ebfcc5cb4d430aa51a9; sid:2610434; rev:1;)
-#alert tls any any -> any any (msg:"TGI HUNT JA3 SSL-Client Fingerprint Detected (GoldenAxe Ransomware)"; ja3_hash; content:"5001b4c2a48c94b76ca1f0199345fe60"; reference:md5,87c1b3e2b788dd54d196fb67ba0da6dc; sid:2610436; rev:1;)
-alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; content:"|2e 2e 5c|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610438; rev:1;)
-alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; content:"|2e 2e 2f|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610440; rev:1;)
+
+#alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; content:"|2e 2e 5c|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610438; rev:1;)
+
+#alert http any any -> any any (msg:"TGI HUNT directory traversal chars in HTTP Request Header"; flow:established,to_server; content:"|2e 2e 2f|"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610440; rev:1;)
+
 alert ftp-data $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Password Artifact Outbound in FTP"; flow:established,to_server; content:"Password"; fast_pattern; pcre:"/\bPassword\b/"; reference:url,github.com/AlessandroZ/LaZagne; classtype:trojan-activity; sid:2610442; rev:1;)
+
 alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Cookie STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"cookies"; nocase; distance:0; fast_pattern; pcre:"/\bcookies\b/i"; classtype:trojan-activity; sid:2610444; rev:1;)
+
 alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT log STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"log"; nocase; distance:0; fast_pattern; pcre:"/\blog\b/i"; classtype:trojan-activity; sid:2610446; rev:1;)
+
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".stage.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610448; rev:1;)
+
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".resources.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610450; rev:1;)
+
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".feeds.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610452; rev:1;)
+
 alert udp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Anomalous DNS >512 bytes over UDP"; dsize:>512; prefilter; content:"|01 00 00 01 00 00 00 00 00 00|"; offset:2; depth:10; reference:url,tools.ietf.org/html/rfc5966; classtype:trojan-activity; sid:2610454; rev:1;)
+
 alert tcp-pkt any any -> any !2049 (msg:"TGI HUNT abnormally long STOR in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; isdataat:256,relative; classtype:bad-unknown; sid:2610456; rev:1;)
+
 alert ftp any any -> any !2049 (msg:"TGI HUNT abnormally long SIZE in FTP"; flow:established,to_server; content:"SIZE"; depth:4; isdataat:256,relative; classtype:bad-unknown; sid:2610458; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Frequently Abused Java Invocation in HTTP POST Body"; flow:established,to_server; content:"java.lang.ProcessBuilder"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,blog.talosintelligence.com/2019/04/sodinokibi-ransomware-exploits-weblogic.html; sid:2610460; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious Filename Powershell Download"; flow:established,to_server; content:"GET"; http_method; content:".ps1"; http_uri; endswith; fast_pattern; pcre:"/(?:keylogger|rat|stealer|remote)[^/]*\.ps1$/Ui"; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610462; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT .hta File in Referer"; flow:established,to_server; http_referer; content:".hta"; endswith; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610464; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (52b2tlLUNvbW1hbm)"; flow:established; content:"52b2tlLUNvbW1hbm"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610466; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (52b2tlLUNvbW1)"; flow:established; content:"52b2tlLUNvbW1"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610468; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (dm9rZS1Db21)"; flow:established; content:"dm9rZS1Db21";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610470; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (dm9rZS1Db21tYW)"; flow:established; content:"dm9rZS1Db21tYW";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610472; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (nZva2UtQ29tbW)"; flow:established; content:"nZva2UtQ29tbW";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610474; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-Command (Zva2UtQ29)"; flow:established; content:"Zva2UtQ29";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610476; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (52b2tlLVdtaU1)"; flow:established; content:"52b2tlLVdtaU1";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610478; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (52b2tlLVdtaU1ldG)"; flow:established; content:"52b2tlLVdtaU1ldG";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610480; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (dm9rZS1XbWlNZXR)"; flow:established; content:"dm9rZS1XbWlNZXR";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610482; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (dm9rZS1XbWlNZXRob2)"; flow:established; content:"dm9rZS1XbWlNZXRob2";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610484; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (nZva2UtV21pTWV0aG)"; flow:established; content:"nZva2UtV21pTWV0aG";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610486; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Invoke-WmiMethod (Zva2UtV21pTWV)"; flow:established; content:"Zva2UtV21pTWV";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610488; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (ctT2J)"; flow:established; content:"ctT2J"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610490; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (dy1PYmp)"; flow:established; content:"dy1PYmp"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610492; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (dy1PYmplY3)"; flow:established; content:"dy1PYmplY3";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610494; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (V3LU9iam)"; flow:established; content:"V3LU9iam"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610496; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (V3LU9)"; flow:established; app-layer-protocol:!tls; content:"V3LU9"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; metadata: created_at 2001_01_01, updated_at 2023_11_30; classtype:attempted-admin; sid:2610498; rev:3;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (XctT2JqZW)"; flow:established; content:"XctT2JqZW"; distance:0; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610500; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (FydC1Qcm9)"; flow:established; content:"FydC1Qcm9";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610502; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (GFydC1Qcm9jZX)"; flow:established; content:"GFydC1Qcm9jZX";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610504; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (RhcnQtUHJ)"; flow:established; content:"RhcnQtUHJ";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610506; rev:2;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (RhcnQtUHJvY2)"; flow:established; content:"RhcnQtUHJvY2";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610508; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (YXJ0LVByb2N)"; flow:established; content:"YXJ0LVByb2N";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610510; rev:1;)
+
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded Start-Process (YXJ0LVByb2Nlc3)"; flow:established; content:"YXJ0LVByb2Nlc3";reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610512; rev:1;)
+
 alert tcp any any -> $HOME_NET 3389 (msg:"TGI HUNT Likely MSF BlueKeep Auxilliary Scan Inbound"; flow:established; content:"|03 00 00|"; depth:3; content:"Cookie="; distance:0; content:"|0d 0a|"; distance:5; within:2; content:"|00 00 00 00|"; distance:5; endswith; reference:url,medium.com/@bromiley/what-happens-before-hello-ce9f29fa0cef; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610514; rev:1;)
+
 alert tcp any any -> $HOME_NET 3389 (msg:"TGI HUNT Likely RDPScan Scan Inbound"; flow:established; content:"|03 00 00|"; depth:3; content:"Cookie="; distance:0; content:"|0d 0a|"; distance:8; within:2; content:"|01 00 00 00|"; distance:5; endswith; reference:url,medium.com/@bromiley/what-happens-before-hello-ce9f29fa0cef; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610516; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Cobalt Strike Malleable C2 Null Response (Flowbit Set)"; flow:established,to_server; content:"!microsoft.com"; http_host; endswith; http_header_names; content:!"Referer"; content:"Cookie"; flowbits:set,hunt.cs_null_response; flowbits:noalert; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610518; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Cobalt Strike Malleable C2 Null Response"; flow:established,to_client; content:"200"; http_stat_code; depth:3; content:"Content-Length:|20|0|0d 0a|"; fast_pattern; flowbits:isset,hunt.cs_null_response; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610520; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Entrust Entelligence Security Provider (Flowbits Set)"; flow:established,to_server; content:"Entrust Entelligence Security Provider"; http_user_agent; flowbits:set,hunt.entrust_entelligence; flowbits:noalert; threshold:type limit, track by_src, seconds 60, count 1; reference:url,www.entrustdatacard.com/products/pki/entrust-entelligence-security-provider; classtype:trojan-activity; sid:2610522; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Cobalt Strike Extra Whitespace HTTP Response"; flow:established,to_client; content:"HTTP/1.1|20|200|20|OK|20 0d 0a|Content-Type|3a|"; flowbits:isnotset,hunt.entrust_entelligence; content:!"WEBrick"; http_header; reference:url,github.com/fox-it/cobaltstrike-extraneous-space; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610524; rev:3;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Cobalt Strike C2 Meterpreter Profile Artifact"; flow:established,to_server; content:"UMJjAiNUUtvNww0lBj9tzWegwphuIn6hNP9eeIDfOrcHJ3nozYFPT-Jl7WsmbmjZnQXUesoJkcJkpdYEdqgQFE6QZgjWVsLSSDonL28DYDVJ"; reference:url,github.com/rsmudge/Malleable-C2-Profiles/blob/master/APT/meterpreter.profile; classtype:trojan-activity; sid:2610526; rev:1;)
+
 alert tls any any -> any [465,25,587] (msg:"TGI HUNT Suspicious Null in TLS SNI"; tls_sni; content:"|00|"; flow:established,to_server; ssl_state:client_hello; classtype:attempted-admin; sid:2610528; rev:1;)
+
 alert dns any any -> any any (msg:"TGI HUNT honeytokens.org in DNS"; flow:established; dns_query; content:"honeytokens.org"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610530; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT honeytokens.org in HTTP Host"; flow:established; content:"honeytokens.org"; http_host; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610532; rev:1;)
+
 alert tls any any -> any any (msg:"TGI HUNT honeytokens.org in SNI"; flow:established,to_server; tls_sni; content:"honeytokens.org"; endswith; classtype:bad-unknown; sid:2610534;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT PS Execution Policy Registry Key Name in B64"; content:"SEtFWV9MT0NBTF9NQUNISU5FXFNvZnR3YXJlXFBvbGljaWVzXE1pY3Jvc29mdFxXaW5kb3dzXFBvd2VyU2hlbGxc"; classtype:attempted-user; sid:2610536; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT PS Execution Policy Registry Key Name in B64"; content:"hLRVlfTE9DQUxfTUFDSElORVxTb2Z0d2FyZVxQb2xpY2llc1xNaWNyb3NvZnRcV2luZG93c1xQb3dlclNoZWxsX"; classtype:attempted-user; sid:2610538; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT PS Execution Policy Registry Key Name in B64"; content:"IS0VZX0xPQ0FMX01BQ0hJTkVcU29mdHdhcmVcUG9saWNpZXNcTWljcm9zb2Z0XFdpbmRvd3NcUG93ZXJTaGVsbF"; classtype:attempted-user; sid:2610540; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT gitrepo HTTP Probe"; flow:established,to_server; content:"/.git/HEAD"; http_uri; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610542; rev:1;)
+
 # Credit to Didier Stevens for all "DS" rules
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT DS Metasploit Meterpreter HTTP Checkin"; flow:to_server,established; content:"RECV"; http_client_body; depth:4; fast_pattern; isdataat:!0,relative; urilen:23<>24,norm; content:"POST"; http_method; pcre:"/^\/[a-z0-9]{4,5}_[a-z0-9]{16}\/$/Ui"; classtype:trojan-activity; reference:url,blog.didierstevens.com/2015/05/11/detecting-network-traffic-from-metasploits-meterpreter-reverse-http-module/; sid:2610546; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT DS Metasploit User Agent String"; flow:to_server,established; content:"Mozilla/4.0 (compatible\; MSIE 6.1\; Windows NT)|0d 0a|"; http_user_agent; classtype:trojan-activity; reference:url,blog.didierstevens.com/2015/03/16/quickpost-metasploit-user-agent-strings/; sid:2610548; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT DS Metasploit User Agent String"; flow:to_server,established; content:"Mozilla/4.0 (compatible\; MSIE 7.0\; Windows NT 6.0\; Trident/4.0\; SIMBAR={7DB0F6DE-8DE7-4841-9084-28FA914B0F2E}\; SLCC1\; .N|0d 0a|"; http_user_agent; classtype:trojan-activity; reference:url,blog.didierstevens.com/2015/03/16/quickpost-metasploit-user-agent-strings/; sid:2610550; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT DS Metasploit User Agent String"; flow:to_server,established; content:"Mozilla/4.0 (compatible\; Metasploit RSPEC)|0d 0a|"; http_user_agent; classtype:trojan-activity; reference:url,blog.didierstevens.com/2015/03/16/quickpost-metasploit-user-agent-strings/; sid:2610552; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT DS Metasploit User Agent String"; flow:to_server,established; content:"Mozilla/5.0 (compatible\; Googlebot/2.1\; +http://www.google.com/bot.html)|0d 0a|"; http_user_agent; classtype:trojan-activity; reference:url,blog.didierstevens.com/2015/03/16/quickpost-metasploit-user-agent-strings/; sid:2610554; rev:1;)
+
 alert tls any any -> any any (msg:"TGI HUNT Dynamic DNS Domain in SNI"; flow:established,to_server; tls_sni; content:"duckdns.org"; endswith; classtype:bad-unknown; sid:2610556;)
+
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Dynamic DNS Domain in Cert Subject"; flow:established,to_client; tls_cert_subject; content:"duckdns.org"; nocase; endswith; classtype:bad-unknown; sid:2610558; rev:1;)
+
 alert smtp any any -> $HOME_NET any (msg:"TGI HUNT SMB URI in Inbound SMTP"; flow:established; content:"smb://"; classtype:bad-unknown; sid:2610562; rev:1;)
+
 #alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc Inbound"; flow:established; content:"0M8R4KGxGuE"; sid:2610566; rev:1;)
+
 alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound (VBAProject)"; flow:established; file_data; content:"VBAProject"; nocase; classtype:bad-unknown; sid:2610570; rev:1;)
+
 alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound (ActiveMime)"; flow:established; file_data; content:"ActiveMime"; nocase; classtype:bad-unknown; sid:2610572; rev:1;)
+
 alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound (_VBA_PROJECT_CUR)"; flow:established; file_data; content:"_VBA_PROJECT_CUR"; nocase; classtype:bad-unknown; sid:2610574; rev:1;)
+
 alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound (Attribute VB_)"; flow:established; file_data; content:"Attribute VB_"; nocase; classtype:bad-unknown; sid:2610576; rev:1;)
+
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT SMB Administrator Brute Force"; flow:to_server,established; content:"NTLMSSP|00|"; content:"A|00|d|00|m|00|i|00|n|00|i|00|s|00|t|00|r|00|a|00|t|00|o|00|r"; distance:0; threshold:type both, track by_src, seconds 60, count 5; classtype:bad-unknown; sid:2610580; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610584; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610588; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name (impacket)"; flow:established; content:"impacket("; classtype:attempted-user; sid:2610592; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT CS4 Default User-Agent"; flow:established; content:"Mozilla/5.0 (compatible|3b| MSIE 9.0|3b| Windows NT 6.1|3b| Trident/5.0|3b| BOIE9|3b|ENAU)"; http_user_agent; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610596; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Excel Template Injection"; flow:to_server,established; content:".dotm?raw=true"; http_uri; fast_pattern; reference:url,twitter.com/jstrosch/status/1267471477458288642; classtype:trojan-activity; sid:2610600; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; classtype:bad-unknown; sid:2610604; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; classtype:bad-unknown; sid:2610608; rev:1;)
+
 alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610612; rev:1;)
+
 alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil"; flow:established,to_server; content:"STOR"; flowbits:isset,ftp_exfil; classtype:bad-unknown; sid:2610616; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Phishing Simulation HTTP Header Inbound"; flow:established,to_client; http.header; content:"Server|3a 20|ThreatSim-Web-Server|0d 0a|"; classtype:misc-activity; sid:2610620; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (CloudFront)"; flow:established,to_server; content:"POST"; http_method; content:".cloudfront.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610624; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (Azure)"; flow:established,to_server; content:"POST"; http_method; content:".azureedge.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610628; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (AWS)"; flow:established,to_server; content:"POST"; http_method; content:".awsstatic.com"; http_host; fast_pattern; classtype:trojan-activity; sid:2610632; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP Request to 127.0.0.1"; flow:established,to_server; content:"127.0.0.1"; http_host; fast_pattern; classtype:trojan-activity; sid:2610636; rev:1;)
+
 alert tcp any any -> $HOME_NET 23 (msg:"TGI HUNT Sudo Command in Telnet Traffic"; flow:established,to_server; content:"sudo|20|"; nocase; fast_pattern; pcre:"/\bsudo\b/i"; classtype:bad-unknown; sid:2610640; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious Content Type"; flow:established,to_client; http_content_type; content:"application/x-sh"; endswith; reference:url,gist.github.com/travisbgreen/a24c4ea2e11cb53b03b9b327bf07cf89; classtype:bad-unknown; sid:2610644; rev:1;)
+
 alert tls any any -> any any (msg:"TGI HUNT TLS Suspicious String in TLS Subject (metasploit)"; flow:established,to_client; content:"metasploit"; nocase; classtype:bad-unknown; sid:2610648; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Hafnium Webshell Access"; flow:established; http.uri; content:"/aspnet_client/"; fast_pattern; content:".asp"; classtype:bad-unknown; sid:2610652; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP URI"; flow:established; http.uri; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610656; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Client Body"; flow:established; http.request_body; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610660; rev:1;)
+
 #alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Server Body"; flow:established; http.response_body; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610664; rev:1;)
+
 alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT MS Copyright Banner Inbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610668; rev:1;)
+
 alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610672; rev:1;)
+
 alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python SimpleHTTP Server"; flow:established,from_server; http.server; content:"SimpleHTTP/"; file_data; content:"MZ"; within:2; content:"PE|00 00|"; distance:0; classtype:attempted-admin; sid:2610676; rev:1;)
+
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610680; rev:1;)
+
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610684; rev:1;)
+
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT ysoserial Payload Inbound"; flow:to_server,established; content:"ysoserial.payloads"; nocase; reference:url,github.com/foxglovesec/JavaUnserializeExploits; classtype:attempted-admin; sid:2610688; rev:1;)
+
 alert http any any -> [$HOME_NET,$HTTP_SERVERS] any (msg:"TGI HUNT Unsafe Java Runtime Method Inbound"; flow:established,to_server; content:"getRuntime"; nocase; fast_pattern; content:"exec"; nocase; distance:0; pcre:"/\x2e\s*getRuntime\s*\x28\s*\x29\s*\.\s*exec\s*\x28/i"; reference:cve,2019-7238; reference:url,github.com/mpgn/CVE-2019-7238; classtype:attempted-admin; sid:2610692; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Powershell String in HTTP"; flow:established; content:"JABzAD0AT"; fast_pattern; classtype:bad-unknown; sid:2610696; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious admin:admin B64 String in HTTP"; flow:established; content:"YWRtaW46YWRtaW4"; fast_pattern; classtype:bad-unknown; sid:2610700; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"3RhY2tNYXBUYW"; fast_pattern; classtype:bad-unknown; sid:2610704; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"M1MDQzMjg0NTY"; fast_pattern; classtype:bad-unknown; sid:2610708; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"czsMADIAMwoAKwA0AQ"; fast_pattern; classtype:bad-unknown; sid:2610712; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"AHhzcgARamF2YS51dGlsLkh"; fast_pattern; classtype:bad-unknown; sid:2610716; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious JexRemoteTools.jar String in HTTP"; flow:established; content:"JexReverse.class"; fast_pattern; classtype:bad-unknown; sid:2610720; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT (testing) Possible Cobalt Strike HTTP Response"; flow:established,to_client; content:"HTTP/1.1|20|404|20|Not Found|0d 0a|Date|3a 20|"; startswith; content:"|20|GMT|0d 0a|Content-Type|3a 20|text/plain|0d 0a|Content-Length|3a 20|0|0d 0a 0d 0a|"; distance:0; endswith; content:!"Server|3a 20|"; threshold:type limit, track by_src, seconds 60, count 1; classtype:trojan-activity; sid:2610724; rev:3;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Vulnscan String in HTTP"; flow:established; content:"cHJpbnQobWQ1KDMxMzM3KSk7"; fast_pattern; classtype:bad-unknown; sid:2610728; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (localhost)"; flow:to_server,established; http.host; content:"localhost"; bsize:9; http.request_body; content:!"TaniumSOAP"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610732; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Host Artifact String in HTTP (base64 Microsoft Windows)"; flow:established; content:"TWljcm9zb2Z0IFdpbmRvd3Mg"; fast_pattern; classtype:bad-unknown; sid:2610736; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Suspicious String in HTTP (base64 admin:admin)"; flow:established; content:"YWRtaW46YWRtaW4="; fast_pattern; classtype:bad-unknown; sid:2610740; rev:1;)
+
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate Observed (cobaltstrike tls.serial)"; flow:established,to_client; tls.cert_serial; content:"08:bb:00:ee"; endswith; classtype:bad-unknown; sid:2610744; rev:1;)
+
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate Observed (cobaltstrike tls.subject)"; flow:established,to_client; tls.cert_subject; content:"cobaltstrike"; nocase; classtype:bad-unknown; sid:2610748; rev:1;)
+
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate Observed (cobaltstrike tls.issuer)"; flow:established,to_client; tls.cert_issuer; content:"cobaltstrike"; nocase; classtype:bad-unknown; sid:2610752; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Serialized Java Object Inbound"; flow:established,to_server; http.request_body; content:"|ac ed 00 05|"; classtype:bad-unknown; sid:2610756; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP (Shadowcopy UTF16-LE)"; flow:established; content:"FMAaABhAGQAbwB3AGMAbwBwAHkA"; fast_pattern; classtype:bad-unknown; sid:2610760; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP (Get-WmiObject UTF16-LE)"; flow:established; content:"RwBlAHQALQBXAG0AaQBPAGIAagBlAGMAdAA"; fast_pattern; classtype:bad-unknown; sid:2610764; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT b64 exe in HTTP (UTF8)"; flow:established; content:"TVqQAAMAAAAEAAAA//8AAL"; fast_pattern; classtype:bad-unknown; sid:2610768; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT b64 exe in HTTP (UTF16-LE)"; flow:established; content:"T|00|V|00|q|00|Q|00|A|00|A|00|M|00|A|00|A|00|A|00|A|00|E|00|A|00|A|00|A|00|A|00|/|00|/|00|8|00|A|00|A|00|L"; fast_pattern; classtype:bad-unknown; sid:2610772; rev:1;)
 alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF8)"; flow:established; content:"TVqQAAMAAAAEAAAA//8AAL"; fast_pattern; classtype:bad-unknown; sid:2610776; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF16-LE)"; flow:established; content:"T|00|V|00|q|00|Q|00|A|00|A|00|M|00|A|00|A|00|A|00|A|00|E|00|A|00|A|00|A|00|A|00|/|00|/|00|8|00|A|00|A|00|L"; fast_pattern; classtype:bad-unknown; sid:2610780; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT T3 Java Serialized Object Header Observed"; flow:established; content:"|74 33 20 31 32 2e 32 2e 31 0a 41 53 3a 32 35 35|"; fast_pattern; classtype:bad-unknown; sid:2610784; rev:1;)
+
 alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; classtype:bad-unknown; sid:2610788; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT Java Serialized Object Common Shell Strings Observed"; flow:established; content:"|ac ed 00|"; content:"org.apache.commons.collections"; fast_pattern; classtype:bad-unknown; sid:2610792; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT DHT BitTorrent Test sig"; flow:established; content:"|4b 37 59 c9 86 0f 12 50 00 00 00 01|"; depth:12; fast_pattern; classtype:bad-unknown; sid:2610796; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT log4j with Base64"; flow:established; content:"jndi|3a|"; fast_pattern; content:"Base64"; nocase; classtype:bad-unknown; sid:2610800; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Curl to Bare IP Address"; flow:established,to_server; http.user_agent; content:"curl/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610804; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Wget User-Agent to Bare IP Address"; flow:established,to_server; http.user_agent; content:"Wget/"; startswith; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610808; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Python User-Agent to Bare IP Address"; flow:established,to_server; http.user_agent; content:"Python"; nocase; fast_pattern; http.host; pcre:"/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/"; classtype:bad-unknown; sid:2610810; rev:1;)
+
 alert dns any any -> any any (msg:"TGI HUNT dnscat in DNS Query"; flow:established; dns_query; content:"dnscat"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/iagox86/dnscat2; classtype:bad-unknown; sid:2610812; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT PE File b64 and compressed"; flow:established,to_client; content:"7b0HYBxJliUmL23Ke39K9UrX"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,github.com/lukebaggett/dnscat2-powershell/blob/master/dnscat2.ps1; classtype:bad-unknown; sid:2610814; rev:1;)
+
 #alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Vulntest Inbound"; flow:established,to_server; http.uri; content:"touch"; pcre:"/(?:\x60|\x24|\x3b)/Ui"; classtype:bad-unknown; sid:2610816; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Possible Vulntest Inbound"; flow:established,to_server; http.user_agent; content:"GIS - AppSec Team"; classtype:bad-unknown; sid:2610818; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifact Inbound (MODDNA)"; flow:established,to_client; content:"MODDNA"; classtype:bad-unknown; sid:2610820; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Excel XLL PE Artifact Inbound (xlAutoOpen)"; flow:established,to_client; content:"xlAutoOpen"; classtype:bad-unknown; sid:2610822; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT HTTP POST to Frequently Fronted Domain (fastly)"; flow:established,to_server; content:"POST"; http_method; content:".fastly.net"; http_host; fast_pattern; classtype:trojan-activity; sid:2610824; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT WAF MITM of HTTPS"; flow:established,to_server; http.header; content:"X-forwarded-proto"; nocase; pcre:"/^[^\r\n]*https/Ri"; classtype:misc-activity; sid:2610826; rev:1;)
+
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Possible Log4shell Obfuscation Technique"; flow:established; http.uri; content:"${"; fast_pattern; pcre:"/j[ndi]*\${(?:(?:low|upp)er|(?:k8|sy)s|date|main|env|web|:):/i"; reference:url,twitter.com/ymzkei5/status/1469765165348704256; classtype:bad-unknown; sid:2610828; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Powershell Defender Exclusion Inbound (Set-MpPreference)"; flow:established,to_client; content:"Set-MpPreference"; nocase; classtype:bad-unknown; sid:2610830; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Powershell Defender Exclusion Inbound (Add-MpPreference)"; flow:established,to_client; content:"Add-MpPreference"; nocase; classtype:bad-unknown; sid:2610832; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"Yml0Y29pb"; classtype:bad-unknown; sid:2610834; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610836; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (bitcoin)"; flow:established,to_client; content:"JpdGNvaW"; classtype:bad-unknown; sid:2610838; rev:1;)
+
 # alert ip [64.39.96.0/20] any -> $HOME_NET any (msg:"TGI HUNT Qualys PCI Compliance Scanning Address Inbound"; flow:established,to_server; classtype:bad-unknown; sid:2610840; rev:1;)
+
 alert tcp any any -> any any (msg:"TGI HUNT Bare LDAP Query for Domain Computers (BlackByte syntax)"; flow:established; content:"(&(objectClass=computer))"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610842; rev:1;)
+
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Mythic Example C2 Profile Artifacts"; flow:established,to_server; http.uri; content:"/data"; endswith; http.user_agent; content:"Mozilla/5.0 (Windows NT 6.3|3b| Trident/7.0|3b| rv:11.0) like Gecko"; classtype:bad-unknown; sid:2610844; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound as B64 (admin:)"; flow:established; content:"YWRtaW46"; classtype:bad-unknown; sid:2610845; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (pty implant)"; flow:established; content:"import pty"; content:"pty.spawn"; distance:0; classtype:bad-unknown; sid:2610846; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (RealCMD webshell)"; flow:established; content:"runCmd"; content:"RealCMD"; content:"buildJson"; content:"Encrypt"; classtype:bad-unknown; sid:2610847; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (interact .sh)"; flow:established,to_server; http.request_body; content:".interact.sh"; pcre:"/\.interact\.sh\b/i"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610848; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (uname)"; flow:established,to_server; http.request_body; content:"uname"; pcre:"/\buname\b/"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610849; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (wget)"; flow:established,to_server; http.request_body; content:"wget"; pcre:"/\bwget\b/"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610850; rev:1;)
+
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (curl)"; flow:established,to_server; http.request_body; content:"curl"; pcre:"/\bcurl\b/"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610851; rev:1;)
+
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (msf jar payload)"; flow:established; content:"metasploit.datSpawn="; content:"LHOST="; distance:0; content:"metasploit/PK"; distance:0; content:"metasploit/Payload.class"; distance:0; classtype:bad-unknown; sid:2610852; rev:1;)
-alert dns any any -> any any (msg:"TGI HUNT xmrigCC Donation Mining Pool Domain Lookup"; dns_query; content:"donate.graef.in"; endswith; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610853; rev:1;)
+
+alert dns any any -> any any (msg:"TGI HUNT xmrigCC Donation Mining Pool Domain Lookup"; dns_query; content:"donate.graef.in"; bsize:15; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610853; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (b64 DownloadString)"; flow:established; content:"C4ARABvAHcAbgBsAG8AYQBkAFMAdAByAGkAbgBnACgA"; classtype:bad-unknown; sid:2610854; rev:1;)
+
+alert tcp any any -> $HOME_NET 1433 (msg:"TGI HUNT Powershell.exe Inbound to SQL (UTF-16LE)"; flow:established,to_server; content:"|70 00 6f 00 77 00 65 00 72 00 73 00 68 00 65 00 6c 00 6c 00 2e 00 65 00 78 00 65 00|"; nocase; classtype:bad-unknown; sid:2610855; rev:1;)
+
+alert tcp $HOME_NET 1433 -> any any (msg:"TGI HUNT MSSQL Antivirus Error (UTF-8)"; flow:established,to_client; content:"|54 68 69 73 20 73 63 72 69 70 74 20 63 6f 6e 74 61 69 6e 73 20 6d 61 6c 69 63 69 6f 75 73 20 63 6f 6e 74 65 6e 74 20 61 6e 64 20 68 61 73 20 62 65 65 6e 20 62 6c 6f 63 6b 65 64 20 62 79 20 79 6f 75 72 20 61 6e 74 69 76 69 72 75 73 20 73 6f 66 74 77 61 72 65 2e|"; classtype:bad-unknown; sid:2610856; rev:1;)
+
+alert tcp $HOME_NET 1433 -> any any (msg:"TGI HUNT MSSQL Antivirus Error (UTF-16LE)"; flow:established,to_client; content:"|54 00 68 00 69 00 73 00 20 00 73 00 63 00 72 00 69 00 70 00 74 00 20 00 63 00 6f 00 6e 00 74 00 61 00 69 00 6e 00 73 00 20 00 6d 00 61 00 6c 00 69 00 63 00 69 00 6f 00 75 00 73 00 20 00 63 00 6f 00 6e 00 74 00 65 00 6e 00 74 00 20 00 61 00 6e 00 64 00 20 00 68 00 61 00 73 00 20 00 62 00 65 00 65 00 6e 00 20 00 62 00 6c 00 6f 00 63 00 6b 00 65 00 64 00 20 00 62 00 79 00 20 00 79 00 6f 00 75 00 72 00 20 00 61 00 6e 00 74 00 69 00 76 00 69 00 72 00 75 00 73 00 20 00 73 00 6f 00 66 00 74 00 77 00 61 00 72 00 65 00 2e 00|"; classtype:bad-unknown; sid:2610857; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Malicious Shell Script Artifact Inbound"; flow:established,to_server; content:"export"; content:"HISTFILE"; distance:0; fast_pattern; pcre:"/^\s*=\s*\/dev\/null\b/Ri"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610858; rev:1;)
+
+alert tcp $HOME_NET 1433 -> any any (msg:"TGI HUNT MSSQL Configuration Changed Message (UTF-16LE)"; flow:established,to_client; content:"|63 00 68 00 61 00 6e 00 67 00 65 00 64 00 20 00 66 00 72 00 6f 00 6d 00 20 00 30 00 20 00 74 00 6f 00 20 00 31 00 2e 00 20 00 52 00 75 00 6e 00 20 00 74 00 68 00 65 00 20 00 52 00 45 00 43 00 4f 00 4e 00 46 00 49 00 47 00 55 00 52 00 45 00 20 00 73 00 74 00 61 00 74 00 65 00 6d 00 65 00 6e 00 74 00 20 00 74 00 6f 00 20 00 69 00 6e 00 73 00 74 00 61 00 6c 00 6c 00 2e 00|"; classtype:bad-unknown; sid:2610859; rev:1;)
+
+alert tcp $HOME_NET 1433 -> any any (msg:"TGI HUNT MSSQL Blocked Stored Procedure Message (UTF-16LE)"; flow:established,to_client; content:"|53 00 65 00 72 00 76 00 65 00 72 00 20 00 62 00 6c 00 6f 00 63 00 6b 00 65 00 64 00 20 00 61 00 63 00 63 00 65 00 73 00 73 00 20 00 74 00 6f 00 20 00 70 00 72 00 6f 00 63 00 65 00 64 00 75 00 72 00 65 00|"; content:"|62 00 65 00 63 00 61 00 75 00 73 00 65 00 20 00 74 00 68 00 69 00 73 00 20 00 63 00 6f 00 6d 00 70 00 6f 00 6e 00 65 00 6e 00 74 00 20 00 69 00 73 00 20 00 74 00 75 00 72 00 6e 00 65 00 64 00 20 00 6f 00 66 00 66 00 20 00 61 00 73 00 20 00 70 00 61 00 72 00 74 00 20 00 6f 00 66 00 20 00 74 00 68 00 65 00 20 00 73 00 65 00 63 00 75 00 72 00 69 00 74 00 79 00 20 00 63 00 6f 00 6e 00 66 00 69 00 67 00 75 00 72 00 61 00 74 00 69 00 6f 00 6e 00 20 00 66 00 6f 00 72 00 20 00 74 00 68 00 69 00 73 00 20 00 73 00 65 00 72 00 76 00 65 00 72 00|"; distance:0; classtype:bad-unknown; sid:2610860; rev:1;)
+
+alert tcp any any -> $HOME_NET 1433 (msg:"TGI HUNT MSSQL Generic xp_cmdshell (UTF-8)"; flow:established,to_client; content:"|65 78 65 63 20 6d 61 73 74 65 72 2e 2e 78 70 5f 63 6d 64 73 68 65 6c 6c|"; classtype:bad-unknown; sid:2610861; rev:1;)
+
+alert dns any any -> $HOME_NET any (msg:"TGI HUNT Base64 Encoded EXE File in DNS"; flow:established,to_client; content:"TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; classtype:bad-unknown; sid:2610862; rev:1;)
