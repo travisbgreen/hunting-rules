@@ -103,7 +103,7 @@ alert http any any -> any any (msg:"TGI HUNT unknown command 610cker"; flow:to_s
 
 alert http any any -> any any (msg:"TGI HUNT unknown etherium server probe"; flow:to_server,established; content:"POST"; http_method; urilen:1; content:"method|22 3a 22|eth_accounts"; http_client_body; http_content_type; content:"application/json"; reference:url,github.com/ethereum/wiki/wiki/JSON-RPC; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610280; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Graves Accent (backtick) in HTTP Header"; flow:established,to_server; content:"`"; http_header; content:!"`"; http_client_body; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610282; rev:2;)
+#alert http any any -> any any (msg:"TGI HUNT Graves Accent (backtick) in HTTP Header"; flow:established,to_server; content:"`"; http_header; content:!"`"; http_client_body; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610282; rev:2;)
 
 alert http any any -> any any (msg:"TGI HUNT Content-Type jpeg serving PE likely hostile"; flow:established,from_server; content:"200"; http_stat_code; content:"Content-Type|3a 20|image/jpeg"; http_header; file_data; content:"MZ"; depth:2; byte_jump:4,58,relative,little; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610284; rev:1;)
 
@@ -113,7 +113,7 @@ alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP POST"; 
 
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP"; flow:established; content:"eval("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610290; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Serialized Object PHP inbound"; flow:established,to_server; content:"O|3a|"; pcre:"/\d+\x3a[ -~]*?\x3a\d+\x3a\{/iR"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610296; rev:2;)
+alert http any any -> $HOME_NET any (msg:"TGI HUNT Serialized Object PHP inbound"; flow:established,to_server; content:"O|3a|"; pcre:"/\d+\x3a[ -~]*?\x3a\d+\x3a\{/iR"; content:"|3a|{"; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610296; rev:2;)
 
 alert http any any -> any any (msg:"TGI HUNT Double Transfer-Encoding Header (possible evasion)"; flow:established,to_server; content:"Transfer-Encoding|3a 20|"; http_header; fast_pattern; content:"Transfer-Encoding|3a 20|"; http_header; distance:0; reference:url,noxxi.de/research/http-evader-explained-3-chunked.html; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610308; rev:1;)
 
@@ -171,7 +171,7 @@ alert http any any -> any any (msg:"TGI HUNT SQL verb in HTTP"; flow:established
 
 #alert http any any -> any any (msg:"TGI HUNT HTTP uncommon version Response"; flow:established,to_client; content:"HTTP/"; depth:5; content:!"1.1"; within:3; content:!"1.0"; within:3; flowbits:isnotset,hunt.entrust_entelligence; content:!"BigIP"; http_header; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610366; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT WScript.Shell Inbound"; flow:established,to_client; file_data; content:"WScript.Shell"; nocase; classtype:bad-unknown; sid:2610368; rev:1;)
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT WScript.Shell Inbound"; flow:established,to_client; file_data; content:"WScript.Shell"; nocase; classtype:bad-unknown; sid:2610368; rev:2;)
 
 alert http any any -> any any (msg:"TGI HUNT .bin HTTP download missing headers"; flow:established,to_server; content:".bin"; http_uri; endswith; http_header_names; content:"|0d 0a|Host|0d 0a|Connection|0d 0a 0d 0a|"; classtype:bad-unknown; sid:2610370; rev:1;)
 
@@ -185,7 +185,7 @@ alert http any any -> any any (msg:"TGI HUNT PHP Magic Bytes in HTTP Request"; f
 
 #alert http any any -> any any (msg:"TGI HUNT POST Without Referer Header"; flow:established,to_server; content:"POST"; http_method; http_header_names; content:!"Referer"; threshold:type limit, track by_src, seconds 180, count 1; http_content_type; content:!"application/ocsp-response"; classtype:bad-unknown; sid:2610380; rev:1;)
 
-alert ip any any -> any any (msg:"TGI HUNT sameip Keyword Test Rule"; flow:established,to_server; sameip; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610382; rev:1;)
+#alert ip any any -> any any (msg:"TGI HUNT sameip Keyword Test Rule"; flow:established,to_server; sameip; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610382; rev:1;)
 
 #alert tls any any -> any any (msg:"TGI HUNT TLS Suspicious facebook.com"; tls_cert_subject; content:"facebook.com"; tls_cert_fingerprint; content:!"98:e4:dd:9d:21:83:d5:29:9e:80:43:73:ff:f2:a7:e1:c4:87:9f:5e"; classtype:bad-unknown; sid:2610384; rev:1;)
 
@@ -232,7 +232,7 @@ alert ftp-data $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Password Artifa
 
 alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Cookie STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"cookies"; nocase; distance:0; fast_pattern; pcre:"/\bcookies\b/i"; classtype:trojan-activity; sid:2610444; rev:1;)
 
-alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT log STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"log"; nocase; distance:0; fast_pattern; pcre:"/\blog\b/i"; classtype:trojan-activity; sid:2610446; rev:1;)
+#alert ftp $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT log STOR Outbound in FTP"; flow:established,to_server; content:"STOR|20|"; depth:5; content:"log"; nocase; distance:0; fast_pattern; pcre:"/\blog\b/i"; classtype:trojan-activity; sid:2610446; rev:1;)
 
 alert dns $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT CobaltStrike Artifact in DNS"; flow:established,to_server; dns_query; content:".stage.123456."; reference:url,threatexpress.com/blogs/2018/a-deep-dive-into-cobalt-strike-malleable-c2/; classtype:trojan-activity; sid:2610448; rev:1;)
 
@@ -402,9 +402,9 @@ alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Client Body"; f
 
 #alert http $HOME_NET any -> any any (msg:"TGI HUNT eval( in HTTP Server Body"; flow:established; http.response_body; content:"eval("; fast_pattern; classtype:bad-unknown; sid:2610664; rev:1;)
 
-alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT MS Copyright Banner Inbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610668; rev:1;)
+alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT MS Copyright Banner Inbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; content:!"MicrosoftAjax.js"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610668; rev:2;)
 
-alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610672; rev:1;)
+alert tcp any any -> $EXTERNAL_NET any (msg:"TGI HUNT MS Copyright Banner Outbound"; flow:established; content:"Copyright |28|C|29|"; content:"Microsoft Corp"; distance:0; app-layer-protocol:!http; content:!"MicrosoftAjax.js"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610672; rev:2;)
 
 alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python SimpleHTTP Server"; flow:established,from_server; http.server; content:"SimpleHTTP/"; file_data; content:"MZ"; within:2; content:"PE|00 00|"; distance:0; classtype:attempted-admin; sid:2610676; rev:1;)
 
@@ -461,9 +461,9 @@ alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF16-LE)"; flow:est
 
 alert tcp any any -> any any (msg:"TGI HUNT T3 Java Serialized Object Header Observed"; flow:established; content:"|74 33 20 31 32 2e 32 2e 31 0a 41 53 3a 32 35 35|"; fast_pattern; classtype:bad-unknown; sid:2610784; rev:1;)
 
-alert tcp $EXTERNAL_NET any -> any any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; classtype:bad-unknown; sid:2610788; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; content:!"jamfsoftware.datasource.core"; content:!"www.seeburger"; classtype:bad-unknown; sid:2610788; rev:3;)
 
-alert tcp any any -> any any (msg:"TGI HUNT Java Serialized Object Common Shell Strings Observed"; flow:established; content:"|ac ed 00|"; content:"org.apache.commons.collections"; fast_pattern; classtype:bad-unknown; sid:2610792; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Java Serialized Object Common Shell Strings Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"org.apache.commons.collections"; fast_pattern; classtype:bad-unknown; sid:2610792; rev:2;)
 
 alert tcp any any -> any any (msg:"TGI HUNT DHT BitTorrent Test sig"; flow:established; content:"|4b 37 59 c9 86 0f 12 50 00 00 00 01|"; depth:12; fast_pattern; classtype:bad-unknown; sid:2610796; rev:1;)
 
@@ -521,7 +521,7 @@ alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body
 
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (wget)"; flow:established,to_server; http.request_body; content:"wget"; pcre:"/\bwget\b/"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610850; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (curl)"; flow:established,to_server; http.request_body; content:"curl"; pcre:"/\bcurl\b/"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610851; rev:1;)
+alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP POST Body (curl)"; flow:established,to_server; http.method; content:"POST"; http.request_body; content:"curl"; pcre:"/\bcurl\b/"; content:!"PolycomReal"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; reference:url,unit42.paloaltonetworks.com/exploits-interactsh/; sid:2610851; rev:2;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious Strings Inbound (msf jar payload)"; flow:established; content:"metasploit.datSpawn="; content:"LHOST="; distance:0; content:"metasploit/PK"; distance:0; content:"metasploit/Payload.class"; distance:0; classtype:bad-unknown; sid:2610852; rev:1;)
 
@@ -549,3 +549,5 @@ alert dns any any -> $HOME_NET any (msg:"TGI HUNT Base64 Encoded EXE File in DNS
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (msf phpshell)"; flow:established; content:"Lyo8P3BocCAvKiovIGVycm9yX3JlcG9ydGluZygwKTsgJGlw"; reference:url,travisgreen.net/updates/20240123; reference:url,github.com/rapid7/metasploit-framework/blob/ef8f8bc8d36a9a4df0c544b26eb1c20368244ca6/lib/msf/core/payload/php/reverse_tcp.rb#L51; classtype:bad-unknown; sid:2610863; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (obfuscated vbs)"; flow:established; content:"Replace(Replace(Replace("; fast_pattern; nocase; content:"CreateObject"; nocase; reference:url,github.com/ScorpionesLabs/DVS/blob/b986f33dbf2b997455350233dc47b863dcac1a75/DVS.psm1#L4291C1-L4292C1; classtype:bad-unknown; sid:2610865; rev:1;)
+
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (Branchlock obfuscator)"; flow:established; content:"Obfuscated using the Branchlock obfuscator for java"; fast_pattern; reference:url,www.fortinet.com/blog/threat-research/vcurms-a-simple-and-functional-weapon; classtype:bad-unknown; sid:2610866; rev:1;)
