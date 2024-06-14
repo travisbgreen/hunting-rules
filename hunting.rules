@@ -285,7 +285,7 @@ alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Bas
 
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (V3LU9iam)"; flow:established; content:"V3LU9iam"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610496; rev:2;)
 
-alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (V3LU9)"; flow:established; app-layer-protocol:!tls; content:"V3LU9"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; metadata: created_at 2001_01_01, updated_at 2023_11_30; classtype:attempted-admin; sid:2610498; rev:3;)
+#alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (V3LU9)"; flow:established; app-layer-protocol:!tls; content:"V3LU9"; distance:0; content:!" TlRMT"; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; metadata: created_at 2001_01_01, updated_at 2023_11_30; classtype:attempted-admin; sid:2610498; rev:3;)
 
 alert ip any any -> $HOME_NET any (msg:"TGI HUNT PowerShell Execution String Base64 Encoded New-Object (XctT2JqZW)"; flow:established; content:"XctT2JqZW"; distance:0; reference:url,github.com/no0be/DNSlivery; threshold:type limit, track by_src, seconds 60, count 1; classtype:attempted-admin; sid:2610500; rev:1;)
 
@@ -446,7 +446,7 @@ alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate 
 
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate Observed (cobaltstrike tls.issuer)"; flow:established,to_client; tls.cert_issuer; content:"cobaltstrike"; nocase; classtype:bad-unknown; sid:2610752; rev:1;)
 
-alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Serialized Java Object Inbound"; flow:established,to_server; http.request_body; content:"|ac ed 00 05|"; classtype:bad-unknown; sid:2610756; rev:1;)
+#alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Serialized Java Object Inbound"; flow:established,to_server; http.request_body; content:"|ac ed 00 05|"; classtype:bad-unknown; sid:2610756; rev:1;)
 
 alert http any any -> any any (msg:"TGI HUNT Suspicious String in HTTP (Shadowcopy UTF16-LE)"; flow:established; content:"FMAaABhAGQAbwB3AGMAbwBwAHkA"; fast_pattern; classtype:bad-unknown; sid:2610760; rev:1;)
 
@@ -459,7 +459,7 @@ alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF8)"; flow:establi
 
 alert tcp any any -> any any (msg:"TGI HUNT b64 exe in TCP (UTF16-LE)"; flow:established; content:"T|00|V|00|q|00|Q|00|A|00|A|00|M|00|A|00|A|00|A|00|A|00|E|00|A|00|A|00|A|00|A|00|/|00|/|00|8|00|A|00|A|00|L"; fast_pattern; classtype:bad-unknown; sid:2610780; rev:1;)
 
-alert tcp any any -> any any (msg:"TGI HUNT T3 Java Serialized Object Header Observed"; flow:established; content:"|74 33 20 31 32 2e 32 2e 31 0a 41 53 3a 32 35 35|"; fast_pattern; classtype:bad-unknown; sid:2610784; rev:1;)
+#alert tcp any any -> any any (msg:"TGI HUNT T3 Java Serialized Object Header Observed"; flow:established; content:"|74 33 20 31 32 2e 32 2e 31 0a 41 53 3a 32 35 35|"; fast_pattern; classtype:bad-unknown; sid:2610784; rev:1;)
 
 alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Java Serialized Object Magic Bytes Observed Inbound"; flow:established; content:"|ac ed 00|"; content:"|6a 61 76 61 2e 6c 61 6e 67 2e|"; fast_pattern; content:!"jamfsoftware.datasource.core"; content:!"www.seeburger"; classtype:bad-unknown; sid:2610788; rev:3;)
 
