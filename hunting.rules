@@ -111,7 +111,7 @@ alert http any any -> any any (msg:"TGI HUNT directory traversal in Zip"; flow:e
 
 alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP POST"; flow:established; content:"shell_exec("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610288; rev:1;)
 
-alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP"; flow:established; content:"eval("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610290; rev:1;)
+#alert http any any -> any any (msg:"TGI HUNT unsafe PHP function in HTTP"; flow:established; content:"eval("; http_client_body; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610290; rev:1;)
 
 alert http any any -> $HOME_NET any (msg:"TGI HUNT Serialized Object PHP inbound"; flow:established,to_server; content:"O|3a|"; pcre:"/\d+\x3a[ -~]*?\x3a\d+\x3a\{/iR"; content:"|3a|{"; fast_pattern; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610296; rev:2;)
 
@@ -360,9 +360,9 @@ alert smtp any any -> $HOME_NET any (msg:"TGI HUNT Office Doc With Macro Inbound
 
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT SMB Administrator Brute Force"; flow:to_server,established; content:"NTLMSSP|00|"; content:"A|00|d|00|m|00|i|00|n|00|i|00|s|00|t|00|r|00|a|00|t|00|o|00|r"; distance:0; threshold:type both, track by_src, seconds 60, count 5; classtype:bad-unknown; sid:2610580; rev:1;)
 
-alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610584; rev:1;)
+#alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610584; rev:1;)
 
-alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610588; rev:1;)
+#alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious SP Name"; content:"sp_dropextendedproc"; flow:established; classtype:attempted-user; sid:2610588; rev:1;)
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Possiblly Malicious PyExe Import Name (impacket)"; flow:established; content:"impacket("; classtype:attempted-user; sid:2610592; rev:1;)
 
