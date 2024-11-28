@@ -137,7 +137,7 @@ alert tcp any any -> any [25,587] (msg:"TGI HUNT Suspicious x-mailer Blat"; flow
 
 alert tcp any any -> any any (msg:"TGI HUNT netsh firewall"; flow:established; content:"netsh firewall"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610330; rev:1;)
 
-alert ip any any -> any any (msg:"TGI HUNT netsh advfirewall"; flow:established; content:"netsh advfirewall"; content:!"This example shows  how to disable Wmi fixed port"; distance:-730; within: 50; content:!"from administrator command prompt window"; distance:22; within:45; threshold:type limit, track by_src, seconds 60, count 1; sid:2610332; rev:1;)
+alert ip any any -> any any (msg:"TGI HUNT netsh advfirewall"; flow:established; content:"netsh advfirewall"; content:!"This example shows  how to disable Wmi fixed port"; distance:-730; within: 50; content:!"from administrator command prompt window"; distance:22; within:45; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610332; rev:1;)
 
 alert tcp any any -> any any (msg:"TGI HUNT WMIC Prompt"; flow:established; content:"wmic|3a|root|5c|cli>"; threshold:type limit, track by_src, seconds 60, count 1; classtype:bad-unknown; sid:2610336; rev:1;)
 
