@@ -551,3 +551,7 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String I
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (obfuscated vbs)"; flow:established; content:"Replace(Replace(Replace("; fast_pattern; nocase; content:"CreateObject"; nocase; reference:url,github.com/ScorpionesLabs/DVS/blob/b986f33dbf2b997455350233dc47b863dcac1a75/DVS.psm1#L4291C1-L4292C1; classtype:bad-unknown; sid:2610865; rev:1;)
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (Branchlock obfuscator)"; flow:established; content:"Obfuscated using the Branchlock obfuscator for java"; fast_pattern; reference:url,www.fortinet.com/blog/threat-research/vcurms-a-simple-and-functional-weapon; classtype:bad-unknown; sid:2610866; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT NTLM Empty Password Hash Observed"; flow:established; content:"aad3b435b51404eeaad3b435b51404ee"; reference:url,travisgreen.net/updates/20240123; classtype:bad-unknown; sid:2610867; rev:1;)
+
+
