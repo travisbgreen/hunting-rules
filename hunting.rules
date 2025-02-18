@@ -554,4 +554,5 @@ alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String I
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT NTLM Empty Password Hash Observed"; flow:established; content:"aad3b435b51404eeaad3b435b51404ee"; reference:url,travisgreen.net/updates/20240123; classtype:bad-unknown; sid:2610867; rev:1;)
 
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (Pyarmor file artifacts)"; flow:established; content:"# Pyarmor"; content:"from pyarmor_runtime_"; distance:0; fast_pattern; reference:url,malware.news/t/unpacking-pyarmor-v8-scripts/91006; classtype:bad-unknown; sid:2610868; rev:1;)
 
