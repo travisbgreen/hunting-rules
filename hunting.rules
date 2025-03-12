@@ -556,3 +556,12 @@ alert tcp any any -> $HOME_NET any (msg:"TGI HUNT NTLM Empty Password Hash Obser
 
 alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Suspicious String Inbound (Pyarmor file artifacts)"; flow:established; content:"# Pyarmor"; content:"from pyarmor_runtime_"; distance:0; fast_pattern; reference:url,malware.news/t/unpacking-pyarmor-v8-scripts/91006; classtype:bad-unknown; sid:2610868; rev:1;)
 
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Chunk-Proxy Webshell Artifacts in HTTP Response"; flow:established,to_client; http.response_header; content:"status|3a 20|"; pcre:"/^(?:close|successfully)/R"; threshold:type limit, track by_src, seconds 60, count 1; reference:url,travisgreen.net/updates/20240123; classtype:bad-unknown; sid:2610869; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Known Malicious Etherium Address Observed"; flow:established; content:"0xfe5df6Aa09A8cd90C86b7aa32a3086AfF8bb79f9"; reference:url,trac-labs.com/dont-ghost-the-socgholish-ghostweaver-backdoor-574154dd9983; classtype:bad-unknown; sid:2610870; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Known Malicious Bech32 Bitcoin Address Observed"; flow:established; content:"bc1qvae6tdt2uf45u38cu8pzxlc63esxut0s5ty2rm"; reference:url,trac-labs.com/dont-ghost-the-socgholish-ghostweaver-backdoor-574154dd9983; classtype:bad-unknown; sid:2610871; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Known Malicious Legacy Bitcoin Address Observed"; flow:established; content:"1H9YhdJbj5LYmoA9VU4fDonkbV37KTuVeJ"; reference:url,trac-labs.com/dont-ghost-the-socgholish-ghostweaver-backdoor-574154dd9983; classtype:bad-unknown; sid:2610872; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Reversed B64 Encoded PE File Header Observed"; flow:established; content:"ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAgLAA8//AAAAEAAAAMAAQqVT"; classtype:bad-unknown; sid:2610873; rev:1;)
