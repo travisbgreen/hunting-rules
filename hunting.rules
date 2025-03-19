@@ -370,9 +370,9 @@ alert http any any -> any any (msg:"TGI HUNT CS4 Default User-Agent"; flow:estab
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Excel Template Injection"; flow:to_server,established; content:".dotm?raw=true"; http_uri; fast_pattern; reference:url,twitter.com/jstrosch/status/1267471477458288642; classtype:trojan-activity; sid:2610600; rev:1;)
 
-alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; classtype:bad-unknown; sid:2610604; rev:1;)
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; classtype:bad-unknown; sid:2610604; rev:1;)
 
-alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Bearer"; classtype:bad-unknown; sid:2610608; rev:1;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; classtype:bad-unknown; sid:2610608; rev:1;)
 
 alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610612; rev:1;)
 
