@@ -565,3 +565,8 @@ alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Known Malicious Bech32 Bitcoin
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Known Malicious Legacy Bitcoin Address Observed"; flow:established; content:"1H9YhdJbj5LYmoA9VU4fDonkbV37KTuVeJ"; reference:url,trac-labs.com/dont-ghost-the-socgholish-ghostweaver-backdoor-574154dd9983; classtype:bad-unknown; sid:2610872; rev:1;)
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT Reversed B64 Encoded PE File Header Observed"; flow:established; content:"ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAgLAA8//AAAAEAAAAMAAQqVT"; classtype:bad-unknown; sid:2610873; rev:1;)
+
+alert http any any -> $HOME_NET any (msg:"TGI HUNT B64 Encoded PE File in HTTP response with BEGIN CERTIFICATE"; flow:established; http.response_body; content:"-----BEGIN CERTIFICATE-----"; fast_pattern; content:"TVqQAAMAAAA"; distance:0; within:16; classtype:bad-unknown; sid:2610874; rev:1;)
+
+# indows\system32\ in b64, seen in RAT pw exfil via b64 POST
+alert tcp any any -> any any (msg:"TGI HUNT B64 Encoded Windows System Path"; flow:established; http.response_body; content:"dpbmRvd3Ncc3lzdGVtMzJc"; fast_pattern; classtype:bad-unknown; sid:2610875; rev:1;)
