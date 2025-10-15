@@ -570,3 +570,10 @@ alert http any any -> $HOME_NET any (msg:"TGI HUNT B64 Encoded PE File in HTTP r
 
 # indows\system32\ in b64, seen in RAT pw exfil via b64 POST
 alert tcp any any -> any any (msg:"TGI HUNT B64 Encoded Windows System Path"; flow:established; http.response_body; content:"dpbmRvd3Ncc3lzdGVtMzJc"; fast_pattern; classtype:bad-unknown; sid:2610875; rev:1;)
+
+alert tcp any any -> any any (msg:"TGI HUNT cmd ping & del - common malware technique string"; flow:established; http.response_body; content:"cmd"; nocase; content:"ping"; nocase; content:"del"; nocase; pcre:"/cmd(?:\x2eexe)?\s+\x2fc\s+ping(?:\x2eexe)?[^\r\n]+\x3e[^\r\n]+\x26\s+del[^\r\n]+(?:\x2ff\s+\x2fq|\x2fq\s+\x2ff)?[^\r\n]*/Ri"; classtype:bad-unknown; sid:2610876; rev:1;)
+
+alert tcp any any -> any any (msg:"TGI HUNT Linux uname output"; flow:established; content:"Linux"; content:"GNU/Linux"; distance:0; pcre:"/Linux\s[a-zA-Z0-9_-]{1,32}?\x2d(?!-)[a-z0-9-]{1,63}(?<!-)\s\d\x2e\d+\x2e\d\x2d\d+[^\s]*\s#\d.{0,32}\sSMP\s(.*?\s)?(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s([0-2][0-9]|3[0-1])\s([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])\s([A-Z]{3})\s(19[0-9]{2}|20[0-9]{2})\s(?:x86_64\s){3}GNU\/Linux/"; nocase; classtype:misc-activity; sid:7704637; rev:1;)
+
+alert http any any -> any any (msg:"TGI HUNT Ysoserial Classname in HTTP POST Body"; flow:established,to_server; http.request_body; content:"ClaimsIdentity"; fast_pattern; classtype:bad-unknown; sid:7704638; rev:1;)
+
