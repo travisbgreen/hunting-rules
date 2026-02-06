@@ -579,3 +579,4 @@ alert http any any -> any any (msg:"TGI HUNT Ysoserial Classname in HTTP POST Bo
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT NTLM Null Session Authentication Attempt via HTTP (ANONYMOUS LOGON/NT AUTHORITY) "; flow:established; http.header; content:"TlRMTVNTUAADAAAAAQABAEgAAAAAAAAASQAAAAAAAABIAAAAAAAAAEgAAAAAAAAASAAAABAAEABJAAAANYKJ4AAAAAAAAAAAAEkIUrOKi10Sk8ki/EV6PpA"; reference:url,blog.leakix.net/2022/03/bypassing-ntlm-auth-over-http/; classtype:bad-unknown; sid:2610879; rev:1;)
 
+alert tcp any any -> any any (msg:"TGI HUNT Possible Base64-Encoded MAC Address in Payload"; content:"|36|"; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; pcre:"/([A-Za-z0-9+\/]{2}[AEIMQUYcgk]6){4,5}/"; classtype:policy-violation; sid:2610880; rev:1;)

@@ -5,5 +5,4 @@ Feedback and suggestions are welcomed [here](https://github.com/travisbgreen/hun
 
 [email](mailto:travis.github@travisgreen.net)  
 [blog](http://travisgreen.net)  
-[twitter (retired)](https://twitter.com/travisbgreen/)  
 ![](https://superawesomevectors.com/wp-content/uploads/2021/03/pair-of-meerkats-free-vector-thumb.jpg)
