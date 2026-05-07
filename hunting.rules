@@ -370,9 +370,9 @@ alert http any any -> any any (msg:"TGI HUNT CS4 Default User-Agent"; flow:estab
 
 alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Possible Excel Template Injection"; flow:to_server,established; content:".dotm?raw=true"; http_uri; fast_pattern; reference:url,twitter.com/jstrosch/status/1267471477458288642; classtype:trojan-activity; sid:2610600; rev:1;)
 
-alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; classtype:bad-unknown; sid:2610604; rev:1;)
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Inbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; http.user_agent; content:!"RobotFramework"; classtype:bad-unknown; sid:2610604; rev:2;)
 
-alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; classtype:bad-unknown; sid:2610608; rev:1;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"TGI HUNT Unencrypted HTTP Authorization Header Outbound"; flow:established,to_server; http.header; content:"Authorization|3a 20|Basic"; http.user_agent; content:!"DVTelHAL"; classtype:bad-unknown; sid:2610608; rev:2;)
 
 alert ftp any any -> any any (msg:"TGI HUNT Possible FTP Exfil Flowbit Set"; flow:established,to_server; content:"/incoming/"; flowbits:set,ftp_exfil; flowbits:noalert; classtype:bad-unknown; sid:2610612; rev:1;)
 
@@ -410,7 +410,7 @@ alert http any any -> $HOME_NET any (msg:"TGI HUNT Exe File Served by Python Sim
 
 alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (ASCII)"; flow:established; content:"ntds.dit"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610680; rev:1;)
 
-alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB (UTF-16LE)"; flow:established; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:bad-unknown; sid:2610684; rev:1;)
+alert smb any any -> $HOME_NET any (msg:"TGI HUNT Suspicious ntds.dit Filename in SMB Request (UTF-16LE)"; flow:established,to_server; content:"n|00|t|00|d|00|s|00|.|00|d|00|i|00|t"; fast_pattern; reference:url,stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file; classtype:attempted-admin; sid:2610684; rev:2;)
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT ysoserial Payload Inbound"; flow:to_server,established; content:"ysoserial.payloads"; nocase; reference:url,github.com/foxglovesec/JavaUnserializeExploits; classtype:attempted-admin; sid:2610688; rev:1;)
 
@@ -418,7 +418,7 @@ alert http any any -> [$HOME_NET,$HTTP_SERVERS] any (msg:"TGI HUNT Unsafe Java R
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Powershell String in HTTP"; flow:established; content:"JABzAD0AT"; fast_pattern; classtype:bad-unknown; sid:2610696; rev:1;)
 
-alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious admin:admin B64 String in HTTP"; flow:established; content:"YWRtaW46YWRtaW4"; fast_pattern; classtype:bad-unknown; sid:2610700; rev:1;)
+alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious admin:admin B64 String in HTTP"; flow:established; content:"YWRtaW46YWRtaW4"; fast_pattern; http.user_agent; content:!"OmnicastHttpClientAsync"; classtype:bad-unknown; sid:2610700; rev:2;)
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious ysoserial String in HTTP"; flow:established; content:"3RhY2tNYXBUYW"; fast_pattern; classtype:bad-unknown; sid:2610704; rev:1;)
 
@@ -438,7 +438,7 @@ alert http any any -> any any (msg:"TGI HUNT Suspicious HTTP Server Request (loc
 
 alert http $HOME_NET any -> any any (msg:"TGI HUNT Malicious Host Artifact String in HTTP (base64 Microsoft Windows)"; flow:established; content:"TWljcm9zb2Z0IFdpbmRvd3Mg"; fast_pattern; classtype:bad-unknown; sid:2610736; rev:1;)
 
-alert http $HOME_NET any -> any any (msg:"TGI HUNT Suspicious String in HTTP (base64 admin:admin)"; flow:established; content:"YWRtaW46YWRtaW4="; fast_pattern; classtype:bad-unknown; sid:2610740; rev:1;)
+# SID 2610740 removed — duplicate of 2610700 (same base64 with trailing =, same detection)
 
 alert tls $EXTERNAL_NET any -> $HOME_NET any (msg:"TGI HUNT SSL/TLS Certificate Observed (cobaltstrike tls.serial)"; flow:established,to_client; tls.cert_serial; content:"08:bb:00:ee"; endswith; classtype:bad-unknown; sid:2610744; rev:1;)
 
@@ -579,7 +579,7 @@ alert http any any -> any any (msg:"TGI HUNT Ysoserial Classname in HTTP POST Bo
 
 alert tcp any any -> $HOME_NET any (msg:"TGI HUNT NTLM Null Session Authentication Attempt via HTTP (ANONYMOUS LOGON/NT AUTHORITY) "; flow:established; http.header; content:"TlRMTVNTUAADAAAAAQABAEgAAAAAAAAASQAAAAAAAABIAAAAAAAAAEgAAAAAAAAASAAAABAAEABJAAAANYKJ4AAAAAAAAAAAAEkIUrOKi10Sk8ki/EV6PpA"; reference:url,blog.leakix.net/2022/03/bypassing-ntlm-auth-over-http/; classtype:bad-unknown; sid:2610879; rev:1;)
 
-alert tcp any any -> any any (msg:"TGI HUNT Possible Base64-Encoded MAC Address in Payload"; content:"|36|"; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; pcre:"/([A-Za-z0-9+\/]{2}[AEIMQUYcgk]6){4,5}/"; classtype:policy-violation; sid:2610880; rev:1;)
+#alert tcp any any -> any ![25,465,515,587,631,9100] (msg:"TGI HUNT Possible Base64-Encoded MAC Address in Payload"; content:"|36|"; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; content:"|36|"; distance:3; within:4; pcre:"/([A-Za-z0-9+\/]{2}[AEIMQUYcgk]6){4,5}/"; classtype:policy-violation; sid:2610880; rev:2;)
 
 alert tcp any any -> any any (msg:"TGI HUNT Nexpose ID string in Payload"; content:"vulnerable-status-determined-by-nexpose"; nocase; classtype:policy-violation; sid:2610881; rev:1;)
 
