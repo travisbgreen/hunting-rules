@@ -1,0 +1,294 @@
+# Ferralon Assay
+#
+# This file is the entire Ferralon footprint in this repository: one GitHub Actions
+# workflow that runs a free, deterministic dependency-advisory scan in this repository's
+# own runner, on this workflow's own token. The analysis never runs on Ferralon's
+# infrastructure. No other file is added; the scan's own baseline is stored on a
+# separate state ref, named in the assay step's `with:` block below.
+#
+# INBOUND — what the run downloads. The ferralon-ai/ferralon-assay Action, pinned on its
+# uses: line below, fetches one scanner release: the one that version of the Action names.
+# Every action used below is pinned to a full commit SHA.
+# Past that, the scan drives your language's ordinary build and advisory toolchain and
+# reaches the same public services that toolchain always does — for Go, the module proxy
+# (proxy.golang.org) whenever the runner's module cache is cold, and the Go vulnerability
+# database (vuln.go.dev). Those requests name the modules being resolved or checked; they
+# carry no source code, and they go to the same services a plain `go build` and
+# `govulncheck` in this workflow would already contact. The run also fetches
+# Ferralon's published advisory corpus — a public, read-only dataset on github.com
+# (ferralon-ai/vulnerability-corpus), named in the assay step's `with:` block below —
+# and that request carries nothing from this repository either.
+#
+# OUTBOUND — what leaves this repository to Ferralon. Every request this workflow makes
+# to Ferralon is gated on one switch: the link to your console, FERRALON_LINK_TO_CONSOLE in
+# the assess job's `env:` below, which the assay step passes on as its `link-to-console`
+# input. While it is true, the run makes these requests and no others. None carries your
+# source code:
+#   * at the start of each run, the scan-window step makes ONE request, to the address in
+#     its SCAN_WINDOW_URL, to read the scan window set in your Ferralon console. It sends
+#     this run's GitHub OIDC token, which names this repository, its owner and this run,
+#     and nothing else.
+#   * the scan posts to the two Ferralon endpoints written out in the assay step's
+#     `with:` block, `runs-url` and `ingest-url`:
+#   * on runs that ANALYZED this repository's CANONICAL REF, the scan posts its assessment
+#     to runs-url so it can be read in the Ferralon console. The canonical ref is this
+#     repository's default branch — unless this repository commits a
+#     `.github/ferralon.yml` naming a different ref under `analyze.ref`, in which
+#     case it is that one. Nothing in this file sets it, and adding that file is entirely
+#     your choice. What decides the push is the ref a run ANALYZED, not the event that
+#     started it: a run triggered by a pull request, by the schedule, or by hand posts an
+#     assessment when — and only when — what it analyzed was the canonical ref. That
+#     assessment lists this repository's dependencies, which
+#     advisories matched them, and, for a reachable finding, the function names and
+#     file:line where this code reaches the affected dependency. It carries no source
+#     file contents.
+#   * on every run, the scan posts this repository's owner and name, the commit SHA, and
+#     the advisory id when a re-scan was advisory-triggered to ingest-url. This is also
+#     the channel that tells the scan the Ferralon App was uninstalled, which is what lets
+#     it remove itself.
+# All are best-effort: an unreachable or refusing endpoint is logged and the run still
+# succeeds. Set FERRALON_LINK_TO_CONSOLE to false — or delete the line, which does the
+# same thing — and all of them stop: the scan-window step then uses the window written
+# into it without asking, and the scan, the code-scanning upload (where code scanning is
+# enabled), the PR comment, the Issue and the report artifact all keep working. Turning it
+# off also switches off self-removal, because the uninstall signal arrives on the
+# ingest-url channel. All three addresses are written out in this file, so it names every
+# place a run sends data. Emptying an address does not switch it off; the link to your
+# console is the switch.
+#
+# Removing Ferralon: this file removes itself when the Ferralon App is uninstalled;
+# deleting it manually is also safe — the state ref cleans itself up either way. If you
+# would rather remove it yourself right now: delete this file (a direct commit or a PR
+# both work) and, optionally, delete the state ref named in state-ref below —
+# `git push origin --delete refs/tegron/state`.
+
+name: Ferralon Assay
+
+on:
+  pull_request:
+  # Pushes scan the default branch only. A pull request's branch is scanned by its
+  # pull_request run; scanning its pushes as well would run every scan twice.
+  push:
+    branches: ['master']
+  schedule:
+    - cron: "17 3 * * *" # daily, off-peak (03:17 UTC)
+  workflow_dispatch: # the "Run workflow" button — run the assay on demand
+  repository_dispatch:
+    types: [ferralon-advisory-rescan]
+
+# Serialize assay runs per repository. Concurrent runs on different refs (e.g. a branch
+# push and that branch's pull_request event) otherwise race the scanner's pinned-Issue
+# find-or-create and file duplicate dashboards. The group is repo-scoped, NOT ref-scoped:
+# the racing runs are on different refs but the Issue is one per repository, so a ref-keyed
+# group would not serialize them. cancel-in-progress: false lets a queued run finish rather
+# than be killed mid-scan.
+concurrency:
+  group: ferralon-assay-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+  pull-requests: write
+  id-token: write
+  security-events: write
+
+jobs:
+  assess:
+    name: Ferralon Assay
+    runs-on: ubuntu-latest
+    # The link to your Ferralon console: the one switch for every request this workflow
+    # makes to Ferralon. The scan-window step asks your console only while it is true, and
+    # the assay step passes it on as its link-to-console input. Set it to false — or delete
+    # the line, which does the same thing — and nothing in this workflow contacts Ferralon.
+    env:
+      FERRALON_LINK_TO_CONSOLE: true
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      # Reads this repository's scan window from your Ferralon console at the start of each
+      # scan and hands it to the assay step below, so a window you change in the console
+      # takes effect on the next scan with no change to this file. It sends one request to
+      # SCAN_WINDOW_URL with this run's GitHub OIDC token (3 seconds per attempt, at most 2
+      # attempts, never following a redirect) and writes the window it used, and where it
+      # came from, to this step's log and the run summary.
+      #
+      # It asks only while FERRALON_LINK_TO_CONSOLE (the job's env, above) is true; otherwise
+      # it makes no request at all, uses FALLBACK_POLICY, the window your console held when
+      # Ferralon wrote this file, and says so in its log. If the request fails, or this run has
+      # no OIDC token (a pull request from a fork gets none), it uses FALLBACK_POLICY too and
+      # says why in a warning. This step never fails the job.
+      #
+      # To pin your own window instead, replace the expression on the assay step's
+      # advisory-corpus-policy line with a policy id (published-24h, published-7d,
+      # published-30d or full); you may then delete this step. Ferralon will never change a
+      # pinned value. With no window set in your console, Ferralon's default is 30 days
+      # (published-30d).
+      - id: scan-window
+        name: Read the scan window from your Ferralon console
+        continue-on-error: true
+        shell: bash
+        env:
+          LINK_TO_CONSOLE: ${{ env.FERRALON_LINK_TO_CONSOLE == 'true' }}
+          SCAN_WINDOW_URL: https://api.ferralon.com/policy/scan-window
+          FALLBACK_POLICY: published-30d
+        run: |
+          set +e +o pipefail
+          attempt_secs=3
+          policy="$FALLBACK_POLICY"
+          trap 'echo "policy=$policy" >> "$GITHUB_OUTPUT"' EXIT
+          label() {
+            case "$1" in
+              published-24h) echo "24 hours ($1)" ;;
+              published-7d) echo "7 days ($1)" ;;
+              published-30d) echo "30 days ($1)" ;;
+              full) echo "the full corpus ($1)" ;;
+              *) echo "$1" ;;
+            esac
+          }
+          say() {
+            echo "$1"
+            if [ -n "$GITHUB_STEP_SUMMARY" ]; then echo "$1" >> "$GITHUB_STEP_SUMMARY"; fi
+          }
+          fallback() {
+            echo "::warning title=Ferralon scan window::Using the fallback scan window, $(label "$FALLBACK_POLICY"): $1"
+            say "Scan window: $(label "$FALLBACK_POLICY"), fallback: $1"
+            exit 0
+          }
+          if [ "$LINK_TO_CONSOLE" != "true" ]; then
+            say "Scan window: $(label "$FALLBACK_POLICY"), written into this file; your Ferralon console was not asked, because FERRALON_LINK_TO_CONSOLE is not true"
+            exit 0
+          fi
+          if [ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ] || [ -z "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]; then
+            fallback "this run has no OIDC token (a pull request from a fork gets none)"
+          fi
+          command -v jq > /dev/null || fallback "jq is not installed on this runner"
+          token=$(curl -sS --max-time "$attempt_secs" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=ferralon-ingest" 2> /dev/null | jq -r '.value // empty' 2> /dev/null)
+          [ -n "$token" ] || fallback "could not get this run's OIDC token"
+          echo "::add-mask::$token"
+          body=$(mktemp)
+          reason=""
+          for attempt in 1 2; do
+            rc=0
+            code=$(curl -sS -o "$body" -w '%{http_code}' --max-time "$attempt_secs" \
+              -H "Authorization: Bearer $token" -H "Accept: application/json" "$SCAN_WINDOW_URL" 2> /dev/null) || rc=$?
+            if [ "$rc" -eq 28 ]; then reason="the request timed out"; continue; fi
+            if [ "$rc" -ne 0 ]; then reason="the request failed (curl exit $rc)"; continue; fi
+            case "$code" in
+              200) reason=""; break ;;
+              5??) reason="the console answered HTTP $code"; continue ;;
+              *) fallback "the console answered HTTP $code" ;;
+            esac
+          done
+          [ -z "$reason" ] || fallback "$reason"
+          [ "$(jq -r '.version // empty' "$body" 2> /dev/null)" = "1" ] || fallback "the console's answer has an unknown version"
+          got=$(jq -r '.policy // empty' "$body" 2> /dev/null)
+          [[ "$got" =~ ^[a-z0-9][a-z0-9-]*$ ]] || fallback "the console's answer names no policy"
+          kind=$(jq -r '.source.kind // empty' "$body" 2> /dev/null)
+          policy="$got"
+          case "$kind" in
+            customer) from="set in your Ferralon console" ;;
+            ancestor) from="set in your Ferralon console (inherited)" ;;
+            *) from="Ferralon's default; no window is set in your Ferralon console" ;;
+          esac
+          say "Scan window: $(label "$policy"), $from"
+      - id: assay
+        uses: ferralon-ai/ferralon-assay@0cd22c484115c09389f9902c26ab3c0ead5d099d
+        with:
+          # Links this repository's scans to your Ferralon console. It reads the job's
+          # FERRALON_LINK_TO_CONSOLE (above), the same switch the scan-window step reads,
+          # so change it there, not here. Set to false, the scan runs standalone: nothing
+          # leaves this runner from it, and the code scanning alerts (where code scanning
+          # is enabled), the PR comment, the Issue and the report artifact all keep working.
+          #
+          # While it is true, the scan posts to the two endpoints written out below and
+          # nothing else. Neither carries your source code:
+          #   * runs-url — on runs that ANALYZED this repository's canonical ref — its
+          #     default branch, unless a `.github/ferralon.yml` in this repository names
+          #     a different ref under `analyze.ref` — its assessment, so the console can
+          #     show this repository alongside the rest of your fleet;
+          #   * ingest-url — on every run, this repository's owner and name, the commit,
+          #     and the assay's own version — which is also how the scan learns the
+          #     Ferralon App was uninstalled and removes itself.
+          # Emptying either address does not switch it off (the Action then falls back to
+          # whatever its release carries); FERRALON_LINK_TO_CONSOLE is the switch.
+          link-to-console: ${{ env.FERRALON_LINK_TO_CONSOLE == 'true' }}
+          runs-url: https://api.ferralon.com/runs
+          ingest-url: https://api.ferralon.com/ingest
+          state-repo: ${{ github.repository }}
+          state-ref: refs/tegron/state
+          # Fetches Ferralon's published advisory corpus — a public dataset on
+          # github.com, carrying nothing from this repository — before the scan runs.
+          # Delete these two lines to scan against the built-in advisory sources only.
+          advisory-corpus-repo: ferralon-ai/vulnerability-corpus
+          advisory-corpus-ref: main
+          # How far back the scan looks in that corpus: the window the scan-window step
+          # above read from your Ferralon console at the start of this scan. To pin your
+          # own, replace the expression with a policy id (published-24h, published-7d,
+          # published-30d or full). Ferralon will never change a pinned value. With no window
+          # set in your console, the default is 30 days (published-30d).
+          advisory-corpus-policy: ${{ steps.scan-window.outputs.policy }}
+      # Decides whether the SARIF upload below is attempted: only where GitHub code scanning
+      # exists. Public repositories always have it. A private repository has it only with
+      # GitHub Advanced Security enabled, so for those this step asks the GitHub API, with
+      # this job's own token, for one code scanning alert: 200, or 404 "no analysis found"
+      # (enabled, nothing uploaded yet), mean it is available; anything else, including a 403
+      # "Advanced Security must be enabled", a network error or a missing tool, means skip.
+      # The request goes to GitHub, never to Ferralon, and carries nothing from this
+      # repository. This step never fails the job and never writes an error annotation, so a
+      # repository without Advanced Security shows no red error on a green run.
+      # Skipped on forked-PR runs, where GITHUB_TOKEN has no security-events write.
+      - id: code-scanning
+        name: Check whether code scanning is available
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        continue-on-error: true
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REPO_PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          set +e +o pipefail
+          available=false
+          trap 'echo "available=$available" >> "$GITHUB_OUTPUT"; exit 0' EXIT
+          if [ "$REPO_PRIVATE" = "false" ]; then
+            available=true
+            echo "Code scanning is available: this repository is public."
+            exit 0
+          fi
+          body=$(mktemp)
+          code=$(curl -sS -o "$body" -w '%{http_code}' --max-time 10 \
+            -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "${GITHUB_API_URL:-https://api.github.com}/repos/$REPO/code-scanning/alerts?per_page=1" 2> /dev/null) || code=""
+          case "$code" in
+            200) available=true ;;
+            404) grep -qi 'no analysis found' "$body" 2> /dev/null && available=true ;;
+          esac
+          if [ "$available" = "true" ]; then
+            echo "Code scanning is available for this repository."
+          else
+            echo "Code scanning is not available for this repository (GitHub answered HTTP ${code:-none}); the SARIF upload is skipped. The report artifact is unaffected."
+          fi
+      # Surface the scanner's SARIF in GitHub code scanning where the step above found it
+      # available: public repositories, and private repositories with GitHub Advanced
+      # Security enabled. Skipped on forked-PR runs, where GITHUB_TOKEN has no
+      # security-events write and the upload would hard-fail. continue-on-error covers any
+      # remaining failure, so it never fails the job or skips the report-artifact step below.
+      - name: Upload SARIF to code scanning
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.code-scanning.outputs.available == 'true' }}
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        with:
+          sarif_file: ${{ steps.assay.outputs.sarif-file }}
+      # Keep the full Report bundle (report.json / openvex.json / report.sarif.json) as a
+      # downloadable run artifact. Runs whenever the assay step produced output, even if
+      # the code-scanning upload above failed or was skipped — the artifact is never gated
+      # on Advanced Security.
+      - name: Upload Ferralon Assay report
+        if: ${{ !cancelled() && steps.assay.outputs.out-dir != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ferralon-assay-report
+          path: ${{ steps.assay.outputs.out-dir }}
+          if-no-files-found: warn
